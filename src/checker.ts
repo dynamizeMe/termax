@@ -1,21 +1,71 @@
 import { colors } from "./colors.js";
 import { spinners } from "./spinners.js";
 
-export function checkCommandConfig(obj: any) {
-  const requiredProperties = ['cmd', 'args', 'spinner'];
+export function checkConfig(obj: any): boolean {
+  const requiredProperties = [
+    "cmd",
+    "args",
+    "spinner",
+    "callback",
+    "showMessage",
+    "showData",
+    "showDisconnect",
+    "messageText",
+    "disconnectText",
+    "pauseText",
+    "errorText"
+  ];
   const objProperties = Object.keys(obj);
-  const hasAllProperties: boolean = objProperties.every((prop): boolean | void => {
-    return prop === 'callback' ? true : requiredProperties.includes(prop);
-  });
+  const hasAllProperties: boolean = objProperties.every(
+    (prop): boolean | void => {
+      return requiredProperties.includes(prop);
+    }
+  );
   const isSpinnerProper = checkSpinnerConfig(obj?.spinner);
-  return hasAllProperties && isSpinnerProper;
+  return (
+    checkCmd(obj?.cmd) &&
+    checkAgrumnets(obj?.args) &&
+    hasAllProperties &&
+    isSpinnerProper
+  );
 }
 
-export function checkSpinnerConfig(obj: any) {
-  const requiredProperties = [ 'spinner', 'spawnText', 'succeedText', 'color', 'indent' ];
+function checkSpinnerConfig(obj: any) {
+  const requiredProperties = [
+    "spinner",
+    "spawnText",
+    "succeedText",
+    "color",
+    "indent",
+  ];
+  const requiredPropertyTyeps = [
+    "string",
+    "string",
+    "string",
+    "string",
+    "number",
+  ];
   const objProperties = Object.keys(obj);
-  const hasAllProperties: boolean = objProperties.every((prop): boolean => {return requiredProperties.includes(prop)});
+  const hasAllProperties: boolean = objProperties.every((prop): boolean => {
+    return requiredProperties.includes(prop);
+  });
   const isSpinnerProper = spinners.includes(obj?.spinner);
   const isColorProper = colors.includes(obj?.color);
-  return hasAllProperties && isSpinnerProper && isColorProper;
+  const hasProperPropTypes = requiredPropertyTyeps.every(
+    (type, index): boolean => type === typeof obj[objProperties[index]]
+  );
+  return (
+    hasAllProperties && isSpinnerProper && isColorProper && hasProperPropTypes
+  );
 }
+
+function checkAgrumnets(args: any): boolean {
+  return Array.isArray(args)
+    ? args.every((arg) => typeof arg === "string")
+    : false;
+}
+
+function checkCmd(cmd: any): boolean {
+  return cmd ? typeof cmd === "string" : false;
+}
+
