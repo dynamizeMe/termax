@@ -2,11 +2,15 @@
   "name": "termax",
   "version": "1.0.0",
   "description": "A tool to create cli forms, execute shell cammands and call processes accompanied spinners. ",
-  "types": "lib/termax.d.ts",
-  "main": "lib/termax",
+  "type": "module",
+  "types": "./lib/termax.d.ts",
+  "exports": "./lib/termax.js",
+  "engines": {
+    "node": ">=14.16"
+  },
   "scripts": {
-    "start": "rm ./lib* && tsc && node ./lib/termax.js",
-    "build": "rm ./lib* && tsc",
+    "start": "rm -rf ./lib* && tsc && node ./lib/termax.js",
+    "build": "rm -rf ./lib* && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +28,7 @@
   "author": "Slavko Mihajlovic",
   "license": "ISC",
   "files": [
-    "lib"
+    "/lib"
   ],
   "bugs": {
     "url": "https://github.com/ewhtp4/termax/issues"
