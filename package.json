@@ -1,0 +1,44 @@
+{
+  "name": "termax",
+  "version": "1.0.0",
+  "description": "A tool to create cli forms, execute shell cammands and call processes accompanied spinners. ",
+  "types": "lib/termax.d.ts",
+  "main": "lib/termax",
+  "scripts": {
+    "build": "rm ./lib* && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ewhtp4/termax.git"
+  },
+  "keywords": [
+    "cli",
+    "forms",
+    "shell",
+    "commands",
+    "child",
+    "process"
+  ],
+  "author": "Slavko Mihajlovic",
+  "license": "ISC",
+  "files": [ "lib" ],
+  "bugs": {
+    "url": "https://github.com/ewhtp4/termax/issues"
+  },
+  "homepage": "https://github.com/ewhtp4/termax#readme",
+  "dependencies": {
+    "ora": "^6.1.2",
+    "prettier": "^2.8.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "eslint": "^8.31.0",
+    "eslint-config-standard-with-typescript": "^26.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "typescript": "^4.9.4"
+  },
+  "peerDependencies": {}
+}
