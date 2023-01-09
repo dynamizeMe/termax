@@ -5,7 +5,7 @@ import { ExecuteConfig } from "./execute-config.js";
 import { styleMaker } from "./styles.js";
 
 export function execute(configs: ExecuteConfig[]): void {
-  const config = styleMaker('default', configs[0]);
+  const config = styleMaker(configs[0]);
   if (!checkConfig(config)) {
     throw new Error(`Incorect configuration: ${configs[0]}`);
   }
@@ -23,32 +23,32 @@ export function execute(configs: ExecuteConfig[]): void {
 
     const cmd = spawn(config.cmd, config.args);
 
-    if (config.showData) {
+    if (config.spinner.showData) {
       cmd.stdout.on("data", (data) => {
         console.log(`${data}`);
       });
     }
 
     cmd.stdout.on("pause", () => {
-      spinner.warn(`${configs[0].pauseText?.accent}: ${configs[0].pauseText?.text}` || '');
+      spinner.warn(`${configs[0].spinner.pauseText?.accent}: ${configs[0].spinner.pauseText?.text}` || '');
     });
 
-    if (config.showDisconnect ) {
+    if (config.spinner.showDisconnect ) {
       cmd.on("disconnect", () => {
-        console.log(`${configs[0].disconnectText?.accent}: ${configs[0].disconnectText?.text}`);
+        console.log(`${configs[0].spinner.disconnectText?.accent}: ${configs[0].spinner.disconnectText?.text}`);
       });
     }
 
-    if (config.showMessage) {
+    if (config.spinner.showMessage) {
       cmd.on("message", (data) => {
         console.log(
-          `${configs[0].messageText?.accent}: ${configs[0].messageText?.text} - ${data}`
+          `${configs[0].spinner.messageText?.accent}: ${configs[0].spinner.messageText?.text} - ${data}`
         );
       });
     }
 
     cmd.on("error", (err) => {
-      spinner.fail(`${config.errorText?.accent}: ${config.errorText?.text} - ${err.name}`);
+      spinner.fail(`${config.spinner.errorText?.accent}: ${config.spinner.errorText?.text} - ${err.name}`);
     });
 
     cmd.on("close", () => {

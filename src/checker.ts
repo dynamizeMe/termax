@@ -7,13 +7,6 @@ export function checkConfig(obj: any): boolean {
     "args",
     "spinner",
     "callback",
-    "showMessage",
-    "showData",
-    "showDisconnect",
-    "messageText",
-    "disconnectText",
-    "pauseText",
-    "errorText"
   ];
   const objProperties = Object.keys(obj);
   const hasAllProperties: boolean = objProperties.every(
@@ -33,8 +26,16 @@ export function checkConfig(obj: any): boolean {
 function checkSpinnerConfig(obj: any) {
   const requiredProperties = [
     "spinner",
+    "style",
     "spawnText",
     "succeedText",
+    "showMessage",
+    "showDisconnect",
+    "showData",
+    "messageText",
+    "disconnectText",
+    "pauseText",
+    "errorText",
     "color",
     "indent",
   ];

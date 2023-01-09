@@ -1,21 +1,13 @@
 import { SpinnerConfig } from "./spinner-config.js";
-import { DefaultColors, defaultData, defaultError, defaultMessage, defaultStart, defaultSucess, defaultWarrning, StyleText } from "./styles.js";
 
 export type ExecuteConfig = {
     cmd: string;
     args: string[];
     spinner: SpinnerConfig;
-    showMessage?: boolean,
-    showDisconnect?: boolean;
-    showData?: boolean;
-    messageText?: StyleText;
-    disconnectText?: StyleText;
-    pauseText?: StyleText;
-    errorText?: StyleText;
     callback?: Function;
 }
 
-export const ExecuteConfigFactory = (config: Partial<ExecuteConfig>): ExecuteConfig => {
+export const ExecuteConfigFactory = (config: ExecuteConfig): ExecuteConfig => {
   try {
     return {
       cmd: config?.cmd || '',
@@ -30,28 +22,29 @@ export const ExecuteConfigFactory = (config: Partial<ExecuteConfig>): ExecuteCon
           accent: config.spinner?.succeedText?.accent || 'Success executing',
           text: config.spinner?.succeedText?.text || `${config.cmd} ${config.args?.join(' ')}`
         },
+        messageText: {
+          accent: config.spinner.messageText?.accent || 'MESSAGE',
+          text: config.spinner.messageText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}:`
+        },
+        disconnectText: {
+          accent: config.spinner.messageText?.accent || 'DISCONNECT',
+          text: config.spinner.messageText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}`
+        },
+        pauseText: {
+          accent: config.spinner.pauseText?.accent || 'PAUSED',
+          text: config.spinner.pauseText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}`
+        },
+        errorText: {
+          accent: config.spinner.errorText?.accent || 'ERROR',
+          text: config.spinner.errorText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}`
+        },
         color: config.spinner?.color || 'green',
-        indent: config.spinner?.indent || 0
+        indent: config.spinner?.indent || 0,
+        showMessage: config.spinner.showMessage || false,
+        showDisconnect: config.spinner.showDisconnect || false,
+        showData: config.spinner.showData || false,
       },
-      showMessage: config.showMessage || false,
-      showDisconnect: config.showDisconnect || false,
-      showData: config.showData || false,
-      messageText: {
-        accent: config.messageText?.accent || 'MESSAGE',
-        text: config.messageText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}:`
-      },
-      disconnectText: {
-        accent: config.messageText?.accent || 'DISCONNECT',
-        text: config.messageText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}`
-      },
-      pauseText: {
-        accent: config.pauseText?.accent || 'PAUSED',
-        text: config.pauseText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}`
-      },
-      errorText: {
-        accent: config.errorText?.accent || 'ERROR',
-        text: config.errorText?.text || `${config.cmd} ${config.args ? config?.args.join(" ") : ''}`
-      },
+
       callback: config.callback
     }
   }
