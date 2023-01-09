@@ -1,2 +1,2 @@
-import { executeConfig } from "./execute-config.js";
-export declare function execute(cmds: executeConfig[]): void;
+import { ExecuteConfig } from "./execute-config.js";
+export declare function execute(configs: ExecuteConfig[]): void;

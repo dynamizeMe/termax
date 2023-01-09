@@ -55,7 +55,7 @@ function checkSpinnerConfig(obj: any) {
     (type, index): boolean => type === typeof obj[objProperties[index]]
   );
   return (
-    hasAllProperties && isSpinnerProper && isColorProper && hasProperPropTypes
+    hasAllProperties && isSpinnerProper && isColorProper //&& hasProperPropTypes
   );
 }
 

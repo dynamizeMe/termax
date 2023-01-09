@@ -1,67 +1,66 @@
 import ora from "ora";
 import { spawn } from "child_process";
 import { checkConfig } from "./checker.js";
-import { executeConfig } from "./execute-config.js";
+import { ExecuteConfig } from "./execute-config.js";
+import { styleMaker } from "./styles.js";
 
-export function execute(cmds: executeConfig[]): void {
-  if (!checkConfig(cmds[0])) {
-    throw new Error(`Incorect configuration: ${cmds[0]}`);
+export function execute(configs: ExecuteConfig[]): void {
+  const config = styleMaker('default', configs[0]);
+  if (!checkConfig(config)) {
+    throw new Error(`Incorect configuration: ${configs[0]}`);
   }
-  if (cmds.length === 0) {
+  if (configs.length === 0) {
     console.log("All Done.");
     return;
   } else {
-
     const spinner = ora({
       discardStdin: false,
-      text: cmds[0]?.spinner.spawnText || "",
-      spinner: cmds[0]?.spinner.spinner || "dots2",
-      color: cmds[0]?.spinner.color || "green",
-      indent: cmds[0]?.spinner.indent || 0,
+      text: `${config.spinner.spawnText?.accent}: ${config.spinner.spawnText?.text}` || "",
+      spinner: config.spinner.spinner || "dots2",
+      color: config.spinner.color || "green",
+      indent: config.spinner.indent || 0,
     }).start();
 
-    const cmd = spawn(cmds[0].cmd, cmds[0].args);
+    const cmd = spawn(config.cmd, config.args);
 
-    cmd.on("spawn", () => {});
-
-    if (cmds[0]?.showData) {
+    if (config.showData) {
       cmd.stdout.on("data", (data) => {
         console.log(`${data}`);
       });
     }
 
     cmd.stdout.on("pause", () => {
-      spinner.warn(cmds[0].pauseText);
+      spinner.warn(`${configs[0].pauseText?.accent}: ${configs[0].pauseText?.text}` || '');
     });
 
-    if (cmds[0]?.showDisconnect ) {
+    if (config.showDisconnect ) {
       cmd.on("disconnect", () => {
-        console.log(cmds[0].disconnectText);
+        console.log(`${configs[0].disconnectText?.accent}: ${configs[0].disconnectText?.text}`);
       });
     }
 
-    if (cmds[0]?.showMessage) {
+    if (config.showMessage) {
       cmd.on("message", (data) => {
         console.log(
-          `${cmds[0].messageText} ${data}`
+          `${configs[0].messageText?.accent}: ${configs[0].messageText?.text} - ${data}`
         );
       });
     }
 
     cmd.on("error", (err) => {
-      spinner.fail(`${cmds[0].errorText}: ${err.name}`);
+      spinner.fail(`${config.errorText?.accent}: ${config.errorText?.text} - ${err.name}`);
     });
 
     cmd.on("close", () => {
-      spinner.succeed(cmds[0]?.spinner.succeedText || "");
+      spinner.succeed(`${config.spinner.succeedText?.accent}: ${config.spinner.succeedText?.text}` || "");
 
-      if (cmds[0].callback) {
-        cmds[0].callback();
+      if (config.callback) {
+        config.callback();
       }
-      cmds.shift();
+      configs.shift();
 
-      if (cmds.length > 0 && !spinner.isSpinning) {
-        execute(cmds);
+      if (configs.length > 0 && !spinner.isSpinning) {
+        execute(configs);
       }
     });
   }
