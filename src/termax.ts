@@ -1,34 +1,21 @@
-import process from "process";
-import { ExecuteConfig, ExecuteConfigFactory } from "./execute-config.js";
-import { execute } from "./executor.js";
+import {
+  ExecuteConfig,
+} from "./executor/execute-config.js";
+import { execute } from "./executor/executor.js";
 
 //****************************TEST********************************/
 const tests: ExecuteConfig[] = [
   {
-    cmd: "ng",
-    args: ["new", "ccms", "--create-application=false"],
-    spinner: {
-      spinner: "dots",
-      spawnText: {
-        accent: "Prc",
-        text: "Paz da ti kazem",
-      },
-      succeedText: {
-        accent: 'Damn Right',
-        text: 'Ya baby'
-      }
-    },
-    callback: function () {
-      process.chdir("./ccms");
-    },
+    cmd: "sleep",
+    args: ["5"]
   },
   {
-    cmd: "ng",
-    args: ["generate", "application", "host"],
+    cmd: "sleep",
+    args: ["5"],
     spinner: {
+      style: "pale",
       spinner: "dots6",
       color: 'blue',
-      indent: 6,
       spawnText: {
         accent: "Prc",
         text: "Milojka",
@@ -39,36 +26,25 @@ const tests: ExecuteConfig[] = [
       },
     },
   },
+  {
+    cmd: "sleep",
+    args: ["5"],
+    spinner: {
+      style: "vivid",
+    },
+  },
+  {
+    cmd: "sleep",
+    args: ["5"],
+    spinner: {
+      style: "custom",
+      styleConfig: {
+        spawnColor: '#fc003f',
+        succeedColor: '#0800fc',
+        textColor: '#b5fc00'
+      }
+    },
+  },
 ];
-
-// const toExecute: executeConfig[] = [
-//   ExecuteConfigFactory({
-//     cmd: "ng",
-//     args: ["new", "ccms", "--create-application=false"],
-//     spinner: {
-//       spinner: "dots",
-//       spawnText: "Initializing Workspace",
-//       succeedText: "Succusefully initiated workspace",
-//       color: "yellow",
-//       indent: 0,
-//     },
-//     callback: function () {
-//       process.chdir("./ccms");
-//     },
-//   }),
-//   ExecuteConfigFactory({
-//     cmd: "ng",
-//     args: ["generate", "application", "host"],
-//     spinner: {
-//       spinner: "arrow",
-//       spawnText: "Adding application",
-//       succeedText: "Succusefully added application",
-//       color: "blue",
-//       indent: 2,
-//     },
-//   })
-// ]
-
-// console.log(commands);
 
 execute(tests);
