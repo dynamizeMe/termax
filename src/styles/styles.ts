@@ -6,9 +6,7 @@ import { Palet } from "./palet.js";
 import { StyleConfig } from "./style-config.js";
 import { styleMap } from './style-map.js'
 import { customPaletMacker } from "./palet.js";
-
-export type StyleName = "default" | "custom" | "none" | "pale" | "vivid";
-
+import { StyleName } from "./style-name.js";
 
 export function styleMaker(data: ExecuteConfig): ExecuteConfig {
   const style = data.spinner?.style ? data.spinner?.style : "default";
@@ -21,7 +19,6 @@ function paletMaker(style: StyleName, styleConfig?: StyleConfig): Palet {
 
 function applyStyle(data: ExecuteConfig, palet: Palet): ExecuteConfig {
   const config = ExecuteConfigFactory(data);
-
   if (!!config.spinner?.succeedText?.accent) {
     config.spinner.succeedText.accent = palet?.succeedColor(
       config.spinner.succeedText.accent

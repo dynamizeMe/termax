@@ -21,7 +21,7 @@ export const ExecuteConfigFactory = (config: ExecuteConfig): ExecuteConfig => {
             `${config.cmd} ${config.args?.join(" ")}`,
         },
         succeedText: {
-          accent: config.spinner?.succeedText?.accent || "Success executing",
+          accent: config.spinner?.succeedText?.accent || "Completed executing",
           text:
             config.spinner?.succeedText?.text ||
             `${config.cmd} ${config.args?.join(" ")}`,
