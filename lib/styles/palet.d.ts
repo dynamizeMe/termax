@@ -1,5 +1,4 @@
 import { ChalkInstance } from "chalk";
-import { StyleConfig } from "./style-config.js";
 export type Palet = {
     errorColor: ChalkInstance;
     warrningColor: ChalkInstance;
@@ -9,4 +8,3 @@ export type Palet = {
     messageColor: ChalkInstance;
     textColor: ChalkInstance;
 };
-export declare function customPaletMacker(styleConfig: StyleConfig): Palet;

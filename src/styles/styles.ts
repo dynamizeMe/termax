@@ -5,9 +5,10 @@ import {
 import { Palet } from "./palet.js";
 import { StyleConfig } from "./style-config.js";
 import { styleMap } from "./style-map.js";
-import { customPaletMacker } from "./palet.js";
 import { StyleName } from "./style-name.js";
 import { SpinnerConfigFactory } from "../spinner/spinner-config.js";
+import chalk from "chalk";
+import { DefaultColors } from "./color-sets.js";
 
 export function styleMaker(data: ExecuteConfig): ExecuteConfig {
   return applyStyle(data);
@@ -17,6 +18,18 @@ function paletMaker(style: StyleName, styleConfig?: StyleConfig): Palet {
   return style === "custom" && !!styleConfig
     ? customPaletMacker(styleConfig)
     : (styleMap.get(style) as Palet);
+}
+
+export function customPaletMacker(styleConfig: StyleConfig): Palet {
+  return {
+    errorColor: (styleConfig.errorColor) ? chalk.hex(styleConfig.errorColor) :  chalk.hex(DefaultColors.RED),
+    warrningColor: (styleConfig.warrningColor) ? chalk.hex(styleConfig.warrningColor) : chalk.hex(DefaultColors.ORANGE),
+    spawnColor: (styleConfig.spawnColor) ? chalk.hex(styleConfig.spawnColor) : chalk.hex(DefaultColors.YELLOW),
+    succeedColor: (styleConfig.succeedColor) ? chalk.hex(styleConfig.succeedColor) : chalk.hex(DefaultColors.GREEN),
+    pausedcolor: (styleConfig.pausedcolor) ? chalk.hex(styleConfig.pausedcolor) : chalk.hex(DefaultColors.ORANGE),
+    messageColor: (styleConfig.messageColor) ? chalk.hex(styleConfig.messageColor) : chalk.hex(DefaultColors.PURPLE),
+    textColor: (styleConfig.textColor) ? chalk.hex(styleConfig.textColor) : chalk.hex(DefaultColors.PINK),
+  };
 }
 
 function applyStyle(data: Partial<ExecuteConfig>): ExecuteConfig {

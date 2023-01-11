@@ -8,12 +8,13 @@ export type ExecuteConfig = {
 };
 
 export const ExecuteConfigFactory = (config: Partial<ExecuteConfig>): ExecuteConfig => {
+  const {cmd, args, spinner, callback } = config;
   try {
     return {
-      cmd: config?.cmd || "",
-      args: config?.args || [],
-      spinner: config.spinner,
-      callback: config.callback,
+      cmd: cmd || "",
+      args: args || [],
+      spinner: spinner,
+      callback: callback,
     };
   } catch {
     throw new Error(
