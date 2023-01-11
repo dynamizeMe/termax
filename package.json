@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/dynamizeMe/termax#readme",
   "dependencies": {
+    "boxen": "^7.0.1",
     "chalk": "^5.2.0",
     "inquirer": "^9.1.4",
     "ora": "^6.1.2",

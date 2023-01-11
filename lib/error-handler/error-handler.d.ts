@@ -7,5 +7,5 @@ export declare class ErrorHandler {
     get error(): any;
     set error(err: any);
     errorPrompt(question: Question[], callback?: Function, arg?: any): any;
-    printStack(): void;
+    printErrorData(callback?: Function, arg?: any): void;
 }

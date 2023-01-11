@@ -14,7 +14,7 @@ export const errorQuestion: Question[] = [
     waitUserInput: true,
     choices: [
       'Continue',
-      'See Stack',
+      'See Error',
       'Abort',
       new inquirer.Separator(),
     ],

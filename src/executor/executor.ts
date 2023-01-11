@@ -72,7 +72,7 @@ export function Execute(configs: ExecuteConfig[]): void {
           config.callback();
         }
 
-        shift(configs, spinner);
+        shift(configs, spinner, Execute);
       } else {
         spinner.fail(
           `${config.spinner?.errorText?.accent}: ${config.spinner?.errorText?.text}`
@@ -84,9 +84,9 @@ export function Execute(configs: ExecuteConfig[]): void {
   }
 }
 
-function shift(configs: ExecuteConfig[], spinner: any) {
+function shift(configs: ExecuteConfig[], spinner: any, callback: Function) {
   configs.shift();
   if (configs.length > 0 && !spinner.isSpinning) {
-    Execute(configs);
+    callback(configs);
   }
 }
