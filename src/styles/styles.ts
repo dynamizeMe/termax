@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import {
   ExecuteConfig,
   ExecuteConfigFactory,
@@ -7,7 +8,6 @@ import { StyleConfig } from "./style-config.js";
 import { styleMap } from "./style-map.js";
 import { StyleName } from "./style-name.js";
 import { SpinnerConfigFactory } from "../spinner/spinner-config.js";
-import chalk from "chalk";
 import { DefaultColors } from "./color-sets.js";
 
 export function styleMaker(data: ExecuteConfig): ExecuteConfig {

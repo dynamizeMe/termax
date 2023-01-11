@@ -25,63 +25,41 @@ export type SpinnerConfig = {
 export const SpinnerConfigFactory = (
   config: Partial<ExecuteConfig>
 ): SpinnerConfig => {
-  const {
-    spinner,
-    style,
-    spawnText,
-    succeedText,
-    messageText,
-    disconnectText,
-    pauseText,
-    errorText,
-    color,
-    indent,
-    showMessage,
-    showDisconnect,
-    showData
-  } = config.spinner as SpinnerConfig;
   try {
-    return {
-      spinner: spinner || 'dots',
-      style: style || 'default',
+    const defaulrConfig: SpinnerConfig = {
+      spinner: 'dots',
+      style: 'default',
       spawnText: {
-        accent: spawnText?.accent || 'EXECUTING',
-        text: spawnText?.text || `${config.cmd} ${config.args?.join(' ')}`
+        accent: 'EXECUTING',
+        text: `${config.cmd} ${config.args?.join(' ')}`
       },
       succeedText: {
-        accent: succeedText?.accent || 'COMPLETED EXECUTING',
-        text: succeedText?.text || `${config.cmd} ${config.args?.join(' ')}`
+        accent: 'COMPLETED EXECUTING',
+        text: `${config.cmd} ${config.args?.join(' ')}`
       },
       messageText: {
-        accent: messageText?.accent || 'MESSAGE',
-        text:
-          messageText?.text ||
-          `${config.cmd} ${config.args ? config?.args.join(' ') : ''}:`
+        accent: 'MESSAGE',
+        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}:`
       },
       disconnectText: {
-        accent: disconnectText?.accent || 'DISCONNECT',
-        text:
-          disconnectText?.text ||
-          `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
+        accent: 'DISCONNECT',
+        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
       },
       pauseText: {
-        accent: pauseText?.accent || 'PAUSED',
-        text:
-          pauseText?.text ||
-          `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
+        accent: 'PAUSED',
+        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
       },
       errorText: {
-        accent: errorText?.accent || 'ERROR',
-        text:
-          errorText?.text ||
-          `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
+        accent: 'ERROR',
+        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
       },
-      color: color || 'green',
-      indent: indent || 0,
-      showMessage: showMessage || false,
-      showDisconnect: showDisconnect || false,
-      showData: showData || false
+      color: 'green',
+      indent: 0,
+      showMessage: false,
+      showDisconnect: false,
+      showData: false
     };
+    return {...config, ...defaulrConfig};
   } catch {
     throw new Error('Spinner configuration incorrect.');
   }

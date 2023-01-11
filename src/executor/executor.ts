@@ -7,9 +7,9 @@ import { ErrorHandler } from "../error-handler/error-handler.js";
 
 export function Execute(configs: ExecuteConfig[]): void {
   const config = styleMaker(configs[0]);
-  if (!checkConfig(config)) {
-    throw new Error(`Incorect configuration: ${configs[0]}`);
-  }
+  // if (!checkConfig(config)) {
+  //   throw new Error(`Incorect configuration: ${configs[0]}`);
+  // }
   if (configs.length === 0) {
     console.log("All Done.");
     return;
