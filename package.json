@@ -1,7 +1,7 @@
 {
-  "name": "termax",
+  "name": "@dynamize/termax",
   "version": "1.0.0",
-  "description": "A tool to create cli forms, execute shell cammands and call processes accompanied spinners. ",
+  "description": "A tool to create cli forms, execute shell cammands and call processes accompanied spinners.",
   "type": "module",
   "types": "./lib/termax.d.ts",
   "exports": "./lib/termax.js",
@@ -9,13 +9,13 @@
     "node": ">=14.16"
   },
   "scripts": {
-    "start": "rm -rf ./lib* && tsc && node ./lib/termax.js",
+    "start": "rm -rf ./lib* && tsc && node text.js",
     "build": "rm -rf ./lib* && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ewhtp4/termax.git"
+    "url": "git+https://github.com/dynamizeMe/termax.git"
   },
   "keywords": [
     "cli",
@@ -31,22 +31,20 @@
     "/lib"
   ],
   "bugs": {
-    "url": "https://github.com/ewhtp4/termax/issues"
+    "url": "https://github.com/dynamizeMe/termax/issues"
   },
-  "homepage": "https://github.com/ewhtp4/termax#readme",
+  "homepage": "https://github.com/dynamizeMe/termax#readme",
   "dependencies": {
     "chalk": "^5.2.0",
+    "inquirer": "^9.1.4",
     "ora": "^6.1.2",
     "prettier": "^2.8.2"
   },
   "devDependencies": {
+    "@types/inquirer": "^9.0.3",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "eslint": "^8.31.0",
-    "eslint-config-standard-with-typescript": "^26.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.6.0",
-    "eslint-plugin-promise": "^6.1.1",
     "typescript": "^4.9.4"
   }
 }

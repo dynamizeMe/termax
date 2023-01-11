@@ -3,8 +3,9 @@ import { spawn } from "child_process";
 import { checkConfig } from "../checker/checker.js";
 import { ExecuteConfig } from "./execute-config.js";
 import { styleMaker } from "../styles/styles.js";
+import { ErrorHandler } from "../error-handler/error-handler.js";
 
-export function execute(configs: ExecuteConfig[]): void {
+export function Execute(configs: ExecuteConfig[]): void {
   const config = styleMaker(configs[0]);
   if (!checkConfig(config)) {
     throw new Error(`Incorect configuration: ${configs[0]}`);
@@ -13,9 +14,12 @@ export function execute(configs: ExecuteConfig[]): void {
     console.log("All Done.");
     return;
   } else {
+    const errorHandler = new ErrorHandler();
     const spinner = ora({
       discardStdin: false,
-      text: `${config.spinner?.spawnText?.accent}: ${config.spinner?.spawnText?.text}` || "",
+      text:
+        `${config.spinner?.spawnText?.accent}: ${config.spinner?.spawnText?.text}` ||
+        "",
       spinner: config.spinner?.spinner || "dots2",
       color: config.spinner?.color || "green",
       indent: config.spinner?.indent || 0,
@@ -30,12 +34,17 @@ export function execute(configs: ExecuteConfig[]): void {
     }
 
     cmd.stdout.on("pause", () => {
-      spinner.warn(`${configs[0].spinner?.pauseText?.accent}: ${configs[0].spinner?.pauseText?.text}` || '');
+      spinner.warn(
+        `${configs[0].spinner?.pauseText?.accent}: ${configs[0].spinner?.pauseText?.text}` ||
+          ""
+      );
     });
 
-    if (config.spinner?.showDisconnect ) {
+    if (config.spinner?.showDisconnect) {
       cmd.on("disconnect", () => {
-        console.log(`${configs[0].spinner?.disconnectText?.accent}: ${configs[0].spinner?.disconnectText?.text}`);
+        console.log(
+          `${configs[0].spinner?.disconnectText?.accent}: ${configs[0].spinner?.disconnectText?.text}`
+        );
       });
     }
 
@@ -48,20 +57,36 @@ export function execute(configs: ExecuteConfig[]): void {
     }
 
     cmd.on("error", (err) => {
-      spinner.fail(`${config.spinner?.errorText?.accent}: ${config.spinner?.errorText?.text} - ${err.name}`);
+      errorHandler.hasError = true;
+      errorHandler.error = err;
     });
 
     cmd.on("close", () => {
-      spinner.succeed(`${config.spinner?.succeedText?.accent}: ${config.spinner?.succeedText?.text}` || "");
+      if (!errorHandler.hasError) {
+        spinner.succeed(
+          `${config.spinner?.succeedText?.accent}: ${config.spinner?.succeedText?.text}` ||
+            ""
+        );
 
-      if (config.callback) {
-        config.callback();
-      }
-      configs.shift();
+        if (config.callback) {
+          config.callback();
+        }
 
-      if (configs.length > 0 && !spinner.isSpinning) {
-        execute(configs);
+        shift(configs, spinner);
+      } else {
+        spinner.fail(
+          `${config.spinner?.errorText?.accent}: ${config.spinner?.errorText?.text}`
+        );
+        configs.shift();
+        errorHandler.handleError(Execute, configs);
       }
     });
+  }
+}
+
+function shift(configs: ExecuteConfig[], spinner: any) {
+  configs.shift();
+  if (configs.length > 0 && !spinner.isSpinning) {
+    Execute(configs);
   }
 }
