@@ -7,9 +7,11 @@ export type ExecuteConfig = {
   callback?: Function;
 };
 
+//TODO unnecessary code to be removed
 export const ExecuteConfigFactory = (config: Partial<ExecuteConfig>): ExecuteConfig => {
-  const {cmd, args, spinner, callback } = config;
+
   try {
+    const {cmd, args, spinner, callback } = config;
     return {
       cmd: cmd || "",
       args: args || [],
