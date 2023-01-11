@@ -4,6 +4,7 @@
   "description": "A tool to create cli forms, execute shell cammands and call processes accompanied spinners.",
   "type": "module",
   "types": "./lib/termax.d.ts",
+  "main": "./lib/termax.js",
   "exports": "./lib/termax.js",
   "engines": {
     "node": ">=14.16"
