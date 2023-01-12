@@ -34,10 +34,10 @@ export class ErrorHandler {
 
   errorPrompt(question: Question[], callback?: Function, arg?: any): any {
     inquirer.prompt(question).then((answer) => {
-      if (answer.error === "See Error") {
+      if (answer.choice === "See Error") {
         this.printErrorData(callback, arg);
       } else if (
-        answer.error === "Continue" &&
+        answer.choice === "Continue" &&
         callback &&
         arg &&
         arg.length > 0

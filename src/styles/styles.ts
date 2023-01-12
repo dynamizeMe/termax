@@ -10,7 +10,7 @@ import { StyleName } from "./style-name.js";
 import { SpinnerConfigFactory } from "../spinner/spinner-config.js";
 import { DefaultColors } from "./color-sets.js";
 
-export function styleMaker(data: ExecuteConfig): ExecuteConfig {
+export function styleMaker(data: Partial<ExecuteConfig>): ExecuteConfig {
   return applyStyle(data);
 }
 
@@ -42,14 +42,8 @@ function applyStyle(data: Partial<ExecuteConfig>): ExecuteConfig {
   spinner.spawnText.text = palet?.textColor(spinner.spawnText?.text);
   spinner.spawnText.accent = palet.spawnColor(spinner.spawnText.accent);
   spinner.succeedText.text = palet.textColor(spinner.succeedText.text);
-  spinner.disconnectText.accent = palet.warrningColor(spinner.disconnectText.accent);
-  spinner.disconnectText.text = palet.textColor(spinner.disconnectText.text);
   spinner.errorText.accent = palet.errorColor(spinner.errorText?.accent);
   spinner.errorText.text = palet.textColor(spinner.errorText.text);
-  spinner.messageText.accent = palet.messageColor(spinner.messageText.accent);
-  spinner.messageText.text = palet.textColor(spinner.messageText.text);
-  spinner.pauseText.accent = palet.warrningColor(spinner.pauseText.accent);
-  spinner.pauseText.text = palet.textColor(spinner.pauseText.text);
   config.spinner = spinner;
 
   return config;

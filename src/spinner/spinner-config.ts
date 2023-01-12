@@ -10,12 +10,7 @@ export type SpinnerConfig = {
   style: StyleName;
   spawnText: StyleText;
   succeedText: StyleText;
-  showMessage: boolean;
-  showDisconnect: boolean;
   showData: boolean;
-  messageText: StyleText;
-  disconnectText: StyleText;
-  pauseText: StyleText;
   errorText: StyleText;
   color: Color;
   indent: number;
@@ -26,38 +21,26 @@ export const SpinnerConfigFactory = (
   config: Partial<ExecuteConfig>
 ): SpinnerConfig => {
   try {
-    const defaulrConfig: SpinnerConfig = {
-      spinner: 'dots',
-      style: 'default',
+    config = config as ExecuteConfig;
+    const spinner = config.spinner as SpinnerConfig | undefined;
+    const defaulrConfig = {
+      spinner: spinner?.spinner ||'dots',
+      style: spinner?.style || 'default',
       spawnText: {
-        accent: 'EXECUTING',
-        text: `${config.cmd} ${config.args?.join(' ')}`
+        accent: spinner?.spawnText?.accent || 'EXECUTING',
+        text: spinner?.spawnText?.text || `${config.cmd} ${config.args?.join(' ')}`
       },
       succeedText: {
-        accent: 'COMPLETED EXECUTING',
-        text: `${config.cmd} ${config.args?.join(' ')}`
-      },
-      messageText: {
-        accent: 'MESSAGE',
-        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}:`
-      },
-      disconnectText: {
-        accent: 'DISCONNECT',
-        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
-      },
-      pauseText: {
-        accent: 'PAUSED',
-        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
+        accent: spinner?.succeedText?.accent || 'COMPLETED EXECUTING',
+        text: spinner?.succeedText?.text || `${config.cmd} ${config.args?.join(' ')}`
       },
       errorText: {
-        accent: 'ERROR',
-        text: `${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
+        accent: spinner?.errorText?.accent || 'ERROR',
+        text: spinner?.errorText?.text ||`${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
       },
-      color: 'green',
-      indent: 0,
-      showMessage: false,
-      showDisconnect: false,
-      showData: false
+      color: spinner?.color || 'green',
+      indent: spinner?.indent || 0,
+      showData: spinner?.showData || false
     };
     return {...config, ...defaulrConfig};
   } catch {

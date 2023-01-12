@@ -8,7 +8,7 @@ const messageColor = chalk.hex(DefaultColors.ORANGE);
 export const errorQuestion: Question[] = [
   {
     type: 'list',
-    name: 'error',
+    name: 'choice',
     message: messageColor('How would you like to proceed?'),
     loop: true,
     waitUserInput: true,

@@ -9,12 +9,7 @@ export type SpinnerConfig = {
     style: StyleName;
     spawnText: StyleText;
     succeedText: StyleText;
-    showMessage: boolean;
-    showDisconnect: boolean;
     showData: boolean;
-    messageText: StyleText;
-    disconnectText: StyleText;
-    pauseText: StyleText;
     errorText: StyleText;
     color: Color;
     indent: number;
