@@ -34,7 +34,6 @@ function ExecuteWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): v
   const spinner = constructSpinner(spinnerConfig).start();
   const child = fun(...args) as ChildProcess;
 
-
   child.on('error', (err) => {
     errorHandler.error = err;
   });
