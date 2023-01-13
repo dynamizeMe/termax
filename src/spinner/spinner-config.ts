@@ -27,15 +27,15 @@ export const SpinnerConfigFactory = (
       spinner: spinner?.spinner ||'dots',
       style: spinner?.style || 'default',
       spawnText: {
-        accent: spinner?.spawnText?.accent || 'EXECUTING',
+        prefix: spinner?.spawnText?.prefix || 'EXECUTING',
         text: spinner?.spawnText?.text || `${config.cmd} ${config.args?.join(' ')}`
       },
       succeedText: {
-        accent: spinner?.succeedText?.accent || 'COMPLETED EXECUTING',
+        prefix: spinner?.succeedText?.prefix || 'COMPLETED EXECUTING',
         text: spinner?.succeedText?.text || `${config.cmd} ${config.args?.join(' ')}`
       },
       errorText: {
-        accent: spinner?.errorText?.accent || 'ERROR',
+        prefix: spinner?.errorText?.prefix || 'ERROR',
         text: spinner?.errorText?.text ||`${config.cmd} ${config.args ? config?.args.join(' ') : ''}`
       },
       color: spinner?.color || 'green',

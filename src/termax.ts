@@ -1,11 +1,11 @@
 import { ExecuteConfig } from "./executor/execute-config.js";
 import { GetExecute } from "./executor/executor.js";
+import { processName } from "./executor/executor.js";
 
-class Termax {
-  spawn = (config: ExecuteConfig[]) => GetExecute('spawn', config);
-  exec = (config: ExecuteConfig[]) => GetExecute('exec', config);
-  execFile = (config: ExecuteConfig[]) => GetExecute('execFile', config);
-  fork = (config: ExecuteConfig[]) => GetExecute('fork', config);
-}
+export default processName;
+export const tSpawn = (config: ExecuteConfig[]) => GetExecute('spawn', config);
+export const tExec = (config: ExecuteConfig[]) => GetExecute('exec', config);
+export const tExecFile = (config: ExecuteConfig[]) => GetExecute('execFile', config);
+export const tFork = (config: ExecuteConfig[]) => GetExecute('fork', config);
 
-export default Termax;
+

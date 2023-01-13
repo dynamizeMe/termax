@@ -38,11 +38,11 @@ function applyStyle(data: Partial<ExecuteConfig>): ExecuteConfig {
   const style = spinner.style;
   const palet = paletMaker(style, data.spinner?.styleConfig);
 
-  spinner.succeedText.accent = palet?.succeedColor(spinner.succeedText.accent);
+  spinner.succeedText.prefix = palet?.succeedColor(spinner.succeedText.prefix);
   spinner.spawnText.text = palet?.textColor(spinner.spawnText?.text);
-  spinner.spawnText.accent = palet.spawnColor(spinner.spawnText.accent);
+  spinner.spawnText.prefix = palet.spawnColor(spinner.spawnText.prefix);
   spinner.succeedText.text = palet.textColor(spinner.succeedText.text);
-  spinner.errorText.accent = palet.errorColor(spinner.errorText?.accent);
+  spinner.errorText.prefix = palet.errorColor(spinner.errorText?.prefix);
   spinner.errorText.text = palet.textColor(spinner.errorText.text);
   config.spinner = spinner;
 

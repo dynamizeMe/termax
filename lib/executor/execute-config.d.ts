@@ -4,6 +4,5 @@ export type ExecuteConfig = {
     args: string[];
     handleErrors: boolean;
     spinner?: Partial<SpinnerConfig>;
-    callback?: Function;
 };
 export declare const ExecuteConfigFactory: (config: Partial<ExecuteConfig>) => ExecuteConfig;

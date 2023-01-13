@@ -5,6 +5,8 @@ import {ErrorHandler} from '../error-handler/error-handler.js';
 import {SpinnerConfig} from '../spinner/spinner-config.js';
 import {constructSpinner} from '../spinner/spinner-constructor.js';
 
+export type processName = 'exec' | 'execFile' | 'fork' | 'spawn';
+
 const functionMap = new Map<string, Function>([
   ['exec', exec],
   ['execFile', execFile],
@@ -16,7 +18,7 @@ function constructAtribute(cmd: string, args?: string[]) {
   return args ? [cmd, args] : [cmd];
 }
 
-export function GetExecute(option: string | Function, configs: ExecuteConfig[]) {
+export function GetExecute(option: processName | Function, configs: ExecuteConfig[]) {
   ExecuteWrapper(
     typeof option === 'string' ? (functionMap.get(option) as Function) : option,
     constructAtribute(configs[0].cmd, configs[0].args),
@@ -40,17 +42,16 @@ function ExecuteWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): v
 
   child.on('close', (code, signal) => {
     if (code) {
-      spinner.fail(`${spinnerConfig.errorText.accent}: ${spinnerConfig.errorText.text}`);
+      spinner.fail(`${spinnerConfig.errorText.prefix}: ${spinnerConfig.errorText.text}`);
       configs.shift();
-      errorHandler.handleError(GetExecute, fun, configs);
+      if (config.handleErrors) errorHandler.handleError(GetExecute, fun, configs);
+      else if (configs.length > 0) GetExecute(fun, configs);
     } else if (signal) {
       spinner.info(`Exited with signal: ${signal}`);
     } else {
-      spinner.succeed(`${spinnerConfig.succeedText.accent}: ${spinnerConfig.succeedText.text}` || '');
-      if (config.callback) config.callback();
+      spinner.succeed(`${spinnerConfig.succeedText.prefix}: ${spinnerConfig.succeedText.text}` || '');
       configs.shift();
       if (configs.length > 0) GetExecute(fun, configs);
     }
   });
 }
-

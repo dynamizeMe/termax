@@ -5,16 +5,14 @@ export type ExecuteConfig = {
   args: string[];
   handleErrors: boolean;
   spinner?: Partial<SpinnerConfig>;
-  callback?: Function;
 };
 
 export const ExecuteConfigFactory = (config: Partial<ExecuteConfig>): ExecuteConfig => {
-  const {cmd, args, handleErrors, spinner, callback } = config;
+  const {cmd, args, handleErrors, spinner} = config;
   return {
     cmd: cmd || "",
     args: args || [],
     handleErrors: handleErrors || false,
     spinner: spinner,
-    callback: callback,
   };
 };
