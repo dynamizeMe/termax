@@ -1,11 +1,30 @@
-import {spawn} from 'child_process';
+import {ChildProcess, exec, execFile, fork, spawn} from 'child_process';
 import {ExecuteConfig} from './execute-config.js';
 import {styleMaker} from '../styles/styles.js';
 import {ErrorHandler} from '../error-handler/error-handler.js';
 import {SpinnerConfig} from '../spinner/spinner-config.js';
 import {constructSpinner} from '../spinner/spinner-constructor.js';
 
-export function Execute(configs: ExecuteConfig[]): void {
+const functionMap = new Map<string, Function>([
+  ['exec', exec],
+  ['execFile', execFile],
+  ['fork', fork],
+  ['spawn', spawn]
+]);
+
+function constructAtribute(cmd: string, args?: string[]) {
+  return args ? [cmd, args] : [cmd];
+}
+
+export function GetExecute(option: string | Function, configs: ExecuteConfig[]) {
+  ExecuteWrapper(
+    typeof option === 'string' ? (functionMap.get(option) as Function) : option,
+    constructAtribute(configs[0].cmd, configs[0].args),
+    configs
+  );
+}
+
+function ExecuteWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): void {
   if (configs.length === 0) {
     return;
   }
@@ -13,37 +32,25 @@ export function Execute(configs: ExecuteConfig[]): void {
   const spinnerConfig = config.spinner as SpinnerConfig;
   const errorHandler = new ErrorHandler();
   const spinner = constructSpinner(spinnerConfig).start();
-  const child = spawn(config.cmd, config.args);
-
-  if (spinnerConfig.showData) {
-    child.stdout.on('data', (data) => {
-      console.log(`${data}`);
-    });
-  }
+  const child = fun(...args) as ChildProcess;
 
   child.on('error', (err) => {
-    errorHandler.hasError = true;
     errorHandler.error = err;
   });
 
-  child.on('close', () => {
-    if (!errorHandler.hasError) {
+  child.on('close', (code, signal) => {
+    if (code) {
+      spinner.fail(`${spinnerConfig.errorText.accent}: ${spinnerConfig.errorText.text}`);
+      configs.shift();
+      errorHandler.handleError(GetExecute, fun, configs);
+    } else if (signal) {
+      spinner.info(`Exited with signal: ${signal}`);
+    } else {
       spinner.succeed(`${spinnerConfig.succeedText.accent}: ${spinnerConfig.succeedText.text}` || '');
       if (config.callback) config.callback();
-      else shift(configs, Execute);
-    } else {
-      spinner.fail(`${spinnerConfig.errorText.accent}: ${spinnerConfig.errorText.text}`);
-      if (config.handleErrors) {
-        configs.shift();
-        errorHandler.handleError(Execute, configs);
-      } else shift(configs, Execute);
+      configs.shift();
+      if (configs.length > 0) GetExecute(fun, configs);
     }
   });
 }
 
-function shift(configs: ExecuteConfig[], callback: Function) {
-  configs.shift();
-  if (configs.length > 0) {
-    callback(configs);
-  }
-}

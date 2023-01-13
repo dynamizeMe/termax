@@ -9,19 +9,10 @@ export class ErrorHandler {
   #errorColor = chalk.hex(DefaultColors.PURPLE);
   #exitColor = chalk.hex(DefaultColors.RED);
   #errorMarkColor = chalk.hex(DefaultColors.YELLOW);
-  #hasError: boolean = false;
   #error: any;
 
-  handleError(callback?: Function, arg?: any) {
-    return this.errorPrompt(errorQuestion, callback, arg);
-  }
-
-  get hasError(): boolean {
-    return this.#hasError;
-  }
-
-  set hasError(val: boolean) {
-    this.#hasError = val;
+  handleError(callback?: Function, fun?: Function, config?: any) {
+    return this.errorPrompt(errorQuestion, callback, fun, config);
   }
 
   get error() {
@@ -32,17 +23,18 @@ export class ErrorHandler {
     this.#error = err;
   }
 
-  errorPrompt(question: Question[], callback?: Function, arg?: any): any {
+  errorPrompt(question: Question[], callback?: Function, fun?: Function, config?: any): any {
     inquirer.prompt(question).then((answer) => {
       if (answer.choice === "See Error") {
-        this.printErrorData(callback, arg);
+        this.printErrorData(callback, config);
       } else if (
         answer.choice === "Continue" &&
         callback &&
-        arg &&
-        arg.length > 0
+        fun &&
+        config &&
+        config.length > 0
       ) {
-        callback(arg);
+        callback(fun, config);
       } else {
         console.log(this.#errorMarkColor(failMark), this.#exitColor("Exited with incomplete execution."));
         return 1;
@@ -50,8 +42,8 @@ export class ErrorHandler {
     });
   }
 
-  printErrorData(callback?: Function, arg?: any) {
+  printErrorData(callback?: Function, fun?: Function, config?: any) {
     console.log(this.#errorMarkColor(failMark), this.#errorColor(`${this.error}` || `This error has no data.`));
-    this.errorPrompt(errorQuestion, callback, arg);
+    this.errorPrompt(errorQuestion, callback, fun, config);
   }
 }

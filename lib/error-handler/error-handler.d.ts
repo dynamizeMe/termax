@@ -1,11 +1,9 @@
 import { Question } from "./question.js";
 export declare class ErrorHandler {
     #private;
-    handleError(callback?: Function, arg?: any): any;
-    get hasError(): boolean;
-    set hasError(val: boolean);
+    handleError(callback?: Function, fun?: Function, config?: any): any;
     get error(): any;
     set error(err: any);
-    errorPrompt(question: Question[], callback?: Function, arg?: any): any;
-    printErrorData(callback?: Function, arg?: any): void;
+    errorPrompt(question: Question[], callback?: Function, fun?: Function, config?: any): any;
+    printErrorData(callback?: Function, fun?: Function, config?: any): void;
 }
