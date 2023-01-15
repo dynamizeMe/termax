@@ -18,7 +18,7 @@ const functionMap = new Map<string, Function>([
 
 export function execute(option: processName | Function, configs: ExecuteConfig[] | string): void {
   if(typeof configs === 'string') configs = JSON.parse(configs) as ExecuteConfig[];
-  return ExecuteWrapper(
+  ExecuteWrapper(
     typeof option === 'string' ? (functionMap.get(option) as Function) : option,
     constructAtribute(configs[0].cmd, configs[0].args),
     configs
@@ -27,6 +27,11 @@ export function execute(option: processName | Function, configs: ExecuteConfig[]
 
 function constructAtribute(cmd: string, args?: string[]) {
   return args ? [cmd, args] : [cmd];
+}
+
+function checkLength(fun: Function, configs: ExecuteConfig[]) {
+  if (configs.length) execute(fun, configs);
+  else executeState.emit('done');
 }
 
 function ExecuteWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): void {
@@ -49,15 +54,14 @@ function ExecuteWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): v
       spinner.fail(`${spinnerConfig.errorText.prefix}: ${spinnerConfig.errorText.text}`);
       configs.shift();
       if (config.handleErrors) errorHandler.handleError(execute, fun, configs);
-      else if (configs.length > 0) execute(fun, configs);
-      else executeState.emit('done');
+      checkLength(fun, configs);
     } else if (signal) {
       spinner.info(`Exited with signal: ${signal}`);
+      checkLength(fun, configs);
     } else {
       spinner.succeed(`${spinnerConfig.succeedText.prefix}: ${spinnerConfig.succeedText.text}` || '');
       configs.shift();
-      if (configs.length > 0) execute(fun, configs);
-      else executeState.emit('done');
+      checkLength(fun, configs);
     }
   });
 }
