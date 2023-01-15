@@ -10,7 +10,7 @@ export type processName = 'exec' | 'execFile' | 'fork' | 'spawn';
 export type executorStates = 'done' | 'start';
 
 export class Executor {
-  functionMap = new Map<string, Function>([
+  #functionMap = new Map<string, Function>([
     ['exec', exec],
     ['execFile', execFile],
     ['fork', fork],
@@ -26,18 +26,18 @@ export class Executor {
   execute(option: processName | Function, configs: ExecuteConfig[] | string, callback?: () => any): void {
     if (callback && !this.#Callback) this.#Callback = callback;
     if (typeof configs === 'string') configs = JSON.parse(configs) as ExecuteConfig[];
-    this.executeWrapper(
-      typeof option === 'string' ? (this.functionMap.get(option) as Function) : option,
-      this.constructAtribute(configs[0].cmd, configs[0].args),
+    this.#executeWrapper(
+      typeof option === 'string' ? (this.#functionMap.get(option) as Function) : option,
+      this.#constructAtribute(configs[0].cmd, configs[0].args),
       configs
     );
   }
 
-  constructAtribute(cmd: string, args?: string[]) {
+  #constructAtribute(cmd: string, args?: string[]) {
     return args ? [cmd, args] : [cmd];
   }
 
-  checkLength(fun: Function, configs: ExecuteConfig[]) {
+  #checkLength(fun: Function, configs: ExecuteConfig[]) {
     if (configs.length) this.execute(fun, configs);
     else {
       if (this.#Callback) this.#Callback();
@@ -45,7 +45,7 @@ export class Executor {
     }
   }
 
-  executeWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): void {
+  #executeWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): void {
     const config = styleMaker(configs[0]);
     const spinnerConfig = config.spinner as SpinnerConfig;
     const errorHandler = new ErrorHandler(this);
@@ -62,14 +62,15 @@ export class Executor {
         spinner.fail(`${spinnerConfig.errorText.prefix}: ${spinnerConfig.errorText.text}`);
         configs.shift();
         if (config.handleErrors) errorHandler.handleError(fun, configs)
-        else this.checkLength(fun, configs);
+        else this.#checkLength(fun, configs);
       } else if (signal) {
         spinner.info(`Exited with signal: ${signal}`);
-        this.checkLength(fun, configs);
+        configs.shift();
+        this.#checkLength(fun, configs);
       } else {
         spinner.succeed(`${spinnerConfig.succeedText.prefix}: ${spinnerConfig.succeedText.text}` || '');
         configs.shift();
-        this.checkLength(fun, configs);
+        this.#checkLength(fun, configs);
       }
     });
   }

@@ -3,15 +3,22 @@
   "version": "1.0.0",
   "description": "A tool to create cli forms, execute shell cammands and call processes accompanied spinners.",
   "type": "module",
-  "types": "./lib/termax.d.ts",
-  "main": "./lib/termax.js",
-  "exports": "./lib/termax.js",
+  "types": "./lib/types/termax.d.ts",
+  "main": "./lib/esm/termax.js",
+  "module": "./lib/esm/termax.js",
+  "exports": {
+    ".": {
+        "import": "./lib/esm/termax.js"
+    }
+  },
   "engines": {
     "node": ">=14.16"
   },
   "scripts": {
     "start": "rm -rf ./lib* && tsc && node text.js",
-    "build": "rm -rf ./lib* && tsc",
+    "build": "rm -rf ./lib* && tsc --project tsconfig.esm.json",
+    "build:esm": "tsc --project tsconfig.esm.json",
+    "build:cjs": "tsc --project tsconfig.cjs.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
