@@ -7,21 +7,20 @@ import {constructSpinner} from '../spinner/spinner-constructor.js';
 import EventEmitter from 'events';
 
 export type processName = 'exec' | 'execFile' | 'fork' | 'spawn';
-export type executorStates  = 'done' | 'start';
+export type executorStates = 'done' | 'start';
 
 export class Executor {
-  executeState = new EventEmitter();
-
   #functionMap = new Map<string, Function>([
     ['exec', exec],
     ['execFile', execFile],
     ['fork', fork],
     ['spawn', spawn]
   ]);
-
   #Callback!: Function;
+  executeState = new EventEmitter();
+
   constructor(option?: processName | Function, configs?: ExecuteConfig[] | string, callback?: () => any) {
-    if(option && configs)this.execute(option, configs, callback);
+    if (option && configs) this.execute(option, configs, callback);
   }
 
   execute(option: processName | Function, configs: ExecuteConfig[] | string, callback?: () => any): void {
@@ -50,6 +49,7 @@ export class Executor {
     const config = styleMaker(configs[0]);
     const spinnerConfig = config.spinner as SpinnerConfig;
     const errorHandler = new ErrorHandler();
+    this.executeState.emit('start');
     const spinner = constructSpinner(spinnerConfig).start();
     const child = fun(...args) as ChildProcess;
 

@@ -3,7 +3,7 @@ import {processName, Executor} from '../executor/executor.js';
 import {ChainConfig} from './chain-config.js';
 
 export class Chain {
-  private chain: ChainConfig[] = [];
+  #chain: ChainConfig[] = [];
   #executor = new Executor();
   #isExecuting: boolean = false;
   #callback: Function | null = null;
@@ -25,20 +25,20 @@ export class Chain {
   }
 
   addToChain(fun: Function | processName, configs: ExecuteConfig[], callback?: Function) {
-    if (!this.#isExecuting) this.chain.push({fun, configs});
+    if (!this.#isExecuting) this.#chain.push({fun, configs});
     if (callback) this.#callback = callback;
   }
 
   executeChain() {
-    if (!this.#isExecuting && this.chain.length) {
+    if (!this.#isExecuting && this.#chain.length) {
       this.#isExecuting = true;
-      this.#executor.execute(this.chain[0].fun, this.chain[0].configs);
+      this.#executor.execute(this.#chain[0].fun, this.#chain[0].configs);
       this.#executor.executeState.on('done', () => {
         this.#isExecuting = false;
-        this.chain.shift();
+        this.#chain.shift();
         this.executeChain();
       });
-    } else if (!this.#isExecuting && !this.chain.length && this.#callback) {
+    } else if (!this.#isExecuting && !this.#chain.length && this.#callback) {
       this.#callback();
       this.#callback = null;
     }
