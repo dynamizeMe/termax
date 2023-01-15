@@ -1,11 +1,11 @@
-import { ExecuteConfig } from "../executor/execute-config.js";
-import { processName } from "../executor/executor.js";
-import { ChainConfig } from "./chain-config.js";
+import { ExecuteConfig } from '../executor/execute-config.js';
+import { processName } from '../executor/executor.js';
 export declare class Chain {
-    chain: ChainConfig[];
-    functions: Function[];
-    constructor(functions?: (Function | processName)[], configs?: (ExecuteConfig[])[]);
-    setChain(functions: (Function | processName)[], configs: (ExecuteConfig[])[]): void;
+    private chain;
+    private _isExecuting;
+    constructor(functions?: (Function | processName)[], configs?: ExecuteConfig[][]);
+    get isExecuting(): boolean;
+    setChain(functions: (Function | processName)[], configs: ExecuteConfig[][]): void;
     addToChain(fun: Function | processName, configs: ExecuteConfig[]): void;
     executeChain(): void;
 }

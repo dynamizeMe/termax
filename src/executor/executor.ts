@@ -16,7 +16,8 @@ const functionMap = new Map<string, Function>([
   ['spawn', spawn]
 ]);
 
-export function execute(option: processName | Function, configs: ExecuteConfig[]): void {
+export function execute(option: processName | Function, configs: ExecuteConfig[] | string): void {
+  if(typeof configs === 'string') configs = JSON.parse(configs) as ExecuteConfig[];
   return ExecuteWrapper(
     typeof option === 'string' ? (functionMap.get(option) as Function) : option,
     constructAtribute(configs[0].cmd, configs[0].args),
