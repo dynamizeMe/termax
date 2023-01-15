@@ -1,18 +1,24 @@
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import {DefaultColors} from '../styles/color-sets.js';
-import {errorQuestion} from './error-question.js';
-import {Question} from './question.js';
+import { DefaultColors } from '../styles/color-sets.js';
+import { errorQuestion } from './error-question.js';
+import { Question } from './question.js';
 import logSymbols from 'log-symbols';
+import { Executor } from '../executor/executor.js';
 
 export class ErrorHandler {
   #errorColor = chalk.hex(DefaultColors.PURPLE);
   #exitColor = chalk.hex(DefaultColors.RED);
   #errorMarkColor = chalk.hex(DefaultColors.YELLOW);
   #error: any;
+  executor!:Executor;
 
-  handleError(callback?: Function, fun?: Function, config?: any) {
-    return this.errorPrompt(errorQuestion, callback, fun, config);
+  constructor(executor: Executor) {
+    this.executor = executor;
+  }
+
+  handleError(fun?: Function, config?: any) {
+    return this.errorPrompt(errorQuestion, fun, config);
   }
 
   get error() {
@@ -23,13 +29,13 @@ export class ErrorHandler {
     this.#error = err;
   }
 
-  errorPrompt(question: Question[], callback?: Function, fun?: Function, config?: any): any {
+  errorPrompt(question: Question[], fun?: Function, config?: any): any {
     inquirer.prompt(question).then((answer) => {
       if (answer.choice === 'See Error') {
-        this.printErrorData(callback, fun, config);
-      } else if (answer.choice === 'Continue' && callback && fun && config && config.length > 0) {
+        this.printErrorData(fun, config);
+      } else if (answer.choice === 'Continue' && fun && config && config.length > 0) {
         console.log(this.#errorMarkColor(logSymbols.warning), this.#errorColor('Continued execution with the failed call.'));
-        callback(fun, config);
+        this.executor.execute(fun, config);
       } else {
         console.log(this.#errorMarkColor(logSymbols.error), this.#exitColor('Exited with incomplete execution.'));
         return 1;
@@ -37,8 +43,8 @@ export class ErrorHandler {
     });
   }
 
-  printErrorData(callback?: Function, fun?: Function, config?: any) {
+  printErrorData(fun?: Function, config?: any) {
     console.log(this.#errorMarkColor(logSymbols.warning), this.#errorColor(this.error ? `${this.error}` : `Couldn't retrieve data for this error.`));
-    this.errorPrompt(errorQuestion, callback, fun, config);
+    this.errorPrompt(errorQuestion, fun, config);
   }
 }

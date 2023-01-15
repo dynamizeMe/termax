@@ -1,9 +1,12 @@
 import { Question } from './question.js';
+import { Executor } from '../executor/executor.js';
 export declare class ErrorHandler {
     #private;
-    handleError(callback?: Function, fun?: Function, config?: any): any;
+    executor: Executor;
+    constructor(executor: Executor);
+    handleError(fun?: Function, config?: any): any;
     get error(): any;
     set error(err: any);
-    errorPrompt(question: Question[], callback?: Function, fun?: Function, config?: any): any;
-    printErrorData(callback?: Function, fun?: Function, config?: any): void;
+    errorPrompt(question: Question[], fun?: Function, config?: any): any;
+    printErrorData(fun?: Function, config?: any): void;
 }
