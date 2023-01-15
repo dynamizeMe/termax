@@ -16,7 +16,10 @@ const functionMap = new Map<string, Function>([
   ['spawn', spawn]
 ]);
 
-export function execute(option: processName | Function, configs: ExecuteConfig[] | string): void {
+let Callback: Function;
+
+export function execute(option: processName | Function, configs: ExecuteConfig[] | string, callback?: () => any): void {
+  if(callback && !Callback) Callback = callback;
   if(typeof configs === 'string') configs = JSON.parse(configs) as ExecuteConfig[];
   ExecuteWrapper(
     typeof option === 'string' ? (functionMap.get(option) as Function) : option,
@@ -31,14 +34,13 @@ function constructAtribute(cmd: string, args?: string[]) {
 
 function checkLength(fun: Function, configs: ExecuteConfig[]) {
   if (configs.length) execute(fun, configs);
-  else executeState.emit('done');
+  else {
+    if(Callback) Callback();
+    executeState.emit('done')
+  };
 }
 
 function ExecuteWrapper(fun: Function, args: any[], configs: ExecuteConfig[]): void {
-  if (!configs.length) {
-    executeState.emit('done');
-    return;
-  }
   const config = styleMaker(configs[0]);
   const spinnerConfig = config.spinner as SpinnerConfig;
   const errorHandler = new ErrorHandler();
