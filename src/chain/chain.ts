@@ -1,9 +1,10 @@
 import {ExecuteConfig} from '../executor/execute-config.js';
-import {execute, processName, executeState} from '../executor/executor.js';
+import {processName, Executor} from '../executor/executor.js';
 import {ChainConfig} from './chain-config.js';
 
 export class Chain {
   private chain: ChainConfig[] = [];
+  #executor = new Executor();
   #isExecuting: boolean = false;
   #callback: Function | null = null;
   constructor(functions?: (Function | processName)[], configs?: ExecuteConfig[][], callback?: Function) {
@@ -31,8 +32,8 @@ export class Chain {
   executeChain() {
     if (!this.#isExecuting && this.chain.length) {
       this.#isExecuting = true;
-      execute(this.chain[0].fun, this.chain[0].configs);
-      executeState.on('done', () => {
+      this.#executor.execute(this.chain[0].fun, this.chain[0].configs);
+      this.#executor.executeState.on('done', () => {
         this.#isExecuting = false;
         this.chain.shift();
         this.executeChain();
