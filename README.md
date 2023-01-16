@@ -105,7 +105,8 @@ tExec(calls, () => {
   console.log('All done!');
 });
 ```
-
+Output from the code above:
+![](./gifs/termaxExample1.gif)
 ### tExecFile
 
 <a name="tExecFile"></a>
@@ -148,7 +149,8 @@ import {exec} from 'child_process';
 
 exec('ping 8.8.8.8 -c 4');
 ```
-
+Output from the code above:
+![](./gifs/termaxExample2.gif)
 ### tFork
 
 <a name="tFork"></a>
@@ -188,7 +190,8 @@ import {exec} from 'child_process';
 
 exec('ping 8.8.8.8 -c 4');
 ```
-
+Output from the code above:
+![](./gifs/termaxExample3.gif)
 ### tSpawn
 
 <a name="tSpawn"></a>
@@ -223,7 +226,8 @@ tSpawn(calls, () => {
   console.log('All Done');
 });
 ```
-
+Output from the code above:
+![](./gifs/termaxExample1.gif)
 ### Chain
 
 <a name="chain"></a>
@@ -252,7 +256,7 @@ const calls1 = [
     args: ['3']
   },
   {
-    cmd: 'slep',
+    cmd: 'sleep',
     args: ['3'],
     spinner: {
       style: 'sunrise'
@@ -273,7 +277,6 @@ const calls2 = [
   },
   {
     cmd: './test.js',
-    handleErrors: true,
     spinner: {
       style: 'cold'
     }
@@ -291,7 +294,8 @@ chain.addToChain('spawn', calls1);
 chain.addToChain('fork', calls2);
 chain.executeChain();
 ```
-
+Output from the code above:
+![](./gifs/termaxExample4.gif)
 #### Setting callbacks on a chain
 
 There a multiple ways to set a callback on chain.
@@ -321,14 +325,15 @@ chain.addToChain('fork', calls2, () => {
 });
 chain.executeChain();
 ```
-
+Output from the code above:
+![](./gifs/termaxExample5.gif)
 What we need to keep in mind is that only one callback can be set on a chain.That will be the last callback given:
 
 ```javascript
 import { Chain } from '@dynamize/termax';
 // calls1 and calls2 declared here...
 const chain = new Chain();
-chain.addToChain('spawn', calls1() => {
+chain.addToChain('spawn', calls1, () => {
   console.log('Done #1')
 })
 chain.addToChain('fork', calls2, () => {
@@ -340,7 +345,8 @@ chain.callback = () => {
 chain.executeChain();
 // At the end we only get Done #3 printed out
 ```
-
+Output from the code above:
+![](./gifs/termaxExample6.gif)
 #### Chain saftey integration
 
 Once executeChain is called on a chain it can't be called again you need to set up your chain ahead of executing it, any later alterations to it will be ignored:
@@ -388,7 +394,8 @@ tExec(calls, () => {
   console.log('All done!');
 });
 ```
-
+Output from the code above:
+![](./gifs/termaxExample7.gif)
 But we can change this by adding a handleErrors: true to our config:
 
 ```javascript
@@ -400,7 +407,7 @@ const calls = [
   },
   {
     cmd: "slep 3",
-    handleErrors": true
+    handleErrors: true,
     spinner: {
       style: "cold"
     },
@@ -417,7 +424,9 @@ tExec(calls, () => {
   console.log('All done!')
 });
 ```
-
+Output from the code above:
+![](./gifs/termaxExample8.gif)
+![](./gifs/termaxExample9.gif)
 This will stopt the execution sequence and propt the user to choose between: Continue, See Error or Abort, giving users more control.
 
 ## Configuration
@@ -456,7 +465,8 @@ const call = [
 
 tExec(call);
 ```
-
+Output from the code above:
+![](./gifs/termaxExample10.gif)
 ##### cmd
 
 Type: `string`
