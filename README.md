@@ -105,7 +105,7 @@ tExec(calls, () => {
   console.log('All done!');
 });
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample1.gif)
 ### tExecFile
 
@@ -149,7 +149,7 @@ import {exec} from 'child_process';
 
 exec('ping 8.8.8.8 -c 4');
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample2.gif)
 ### tFork
 
@@ -190,7 +190,7 @@ import {exec} from 'child_process';
 
 exec('ping 8.8.8.8 -c 4');
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample3.gif)
 ### tSpawn
 
@@ -226,7 +226,7 @@ tSpawn(calls, () => {
   console.log('All Done');
 });
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample1.gif)
 ### Chain
 
@@ -294,7 +294,7 @@ chain.addToChain('spawn', calls1);
 chain.addToChain('fork', calls2);
 chain.executeChain();
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample4.gif)
 #### Setting callbacks on a chain
 
@@ -325,7 +325,7 @@ chain.addToChain('fork', calls2, () => {
 });
 chain.executeChain();
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample5.gif)
 What we need to keep in mind is that only one callback can be set on a chain.That will be the last callback given:
 
@@ -345,7 +345,7 @@ chain.callback = () => {
 chain.executeChain();
 // At the end we only get Done #3 printed out
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample6.gif)
 #### Chain saftey integration
 
@@ -394,7 +394,7 @@ tExec(calls, () => {
   console.log('All done!');
 });
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample7.gif)
 But we can change this by adding a handleErrors: true to our config:
 
@@ -424,7 +424,7 @@ tExec(calls, () => {
   console.log('All done!')
 });
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample8.gif)
 ![](./gifs/termaxExample9.gif)
 This will stopt the execution sequence and propt the user to choose between: Continue, See Error or Abort, giving users more control.
@@ -465,7 +465,7 @@ const call = [
 
 tExec(call);
 ```
-Output from the code above:
+#### Output from the code above:
 ![](./gifs/termaxExample10.gif)
 ##### cmd
 
