@@ -15,4 +15,4 @@ export type SpinnerConfig = {
     indent: number;
     styleConfig?: StyleConfig;
 };
-export declare const SpinnerConfigFactory: (config: Partial<ExecuteConfig>) => SpinnerConfig;
+export declare const SpinnerConfigFactory: (config: ExecuteConfig) => ExecuteConfig;

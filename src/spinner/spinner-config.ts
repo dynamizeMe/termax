@@ -18,12 +18,12 @@ export type SpinnerConfig = {
 };
 
 export const SpinnerConfigFactory = (
-  config: Partial<ExecuteConfig>
-): SpinnerConfig => {
+  config: ExecuteConfig
+): ExecuteConfig => {
   try {
     config = config as ExecuteConfig;
     const spinner = config.spinner as SpinnerConfig | undefined;
-    const defaulrConfig = {
+    const defaultConfig = {
       spinner: spinner?.spinner ||'dots',
       style: spinner?.style || 'default',
       spawnText: {
@@ -42,7 +42,7 @@ export const SpinnerConfigFactory = (
       indent: spinner?.indent || 0,
       showData: spinner?.showData || false
     };
-    return {...config, ...defaulrConfig};
+    return {...config, spinner:{...defaultConfig}};
   } catch {
     throw new Error('Spinner configuration incorrect.');
   }

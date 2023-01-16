@@ -8,7 +8,7 @@
   "module": "./lib/esm/termax.js",
   "exports": {
     ".": {
-        "import": "./lib/esm/termax.js"
+      "import": "./lib/esm/termax.js"
     }
   },
   "engines": {
@@ -46,7 +46,6 @@
   },
   "homepage": "https://github.com/dynamizeMe/termax#readme",
   "dependencies": {
-    "boxen": "^7.0.1",
     "chalk": "^5.2.0",
     "inquirer": "^9.1.4",
     "log-symbols": "^5.1.0",

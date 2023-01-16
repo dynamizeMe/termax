@@ -7,7 +7,7 @@ import { Palet } from "./palet.js";
 import { StyleConfig } from "./style-config.js";
 import { styleMap } from "./style-map.js";
 import { StyleName } from "./style-name.js";
-import { SpinnerConfigFactory } from "../spinner/spinner-config.js";
+import { SpinnerConfig, SpinnerConfigFactory } from "../spinner/spinner-config.js";
 import { DefaultColors } from "./color-sets.js";
 
 export function styleMaker(data: Partial<ExecuteConfig>): ExecuteConfig {
@@ -34,7 +34,7 @@ export function customPaletMacker(styleConfig: StyleConfig): Palet {
 
 function applyStyle(data: Partial<ExecuteConfig>): ExecuteConfig {
   const config: ExecuteConfig = ExecuteConfigFactory(data);
-  const spinner = SpinnerConfigFactory(config);
+  const spinner = SpinnerConfigFactory(config).spinner as SpinnerConfig;
   const style = spinner.style;
   const palet = paletMaker(style, data.spinner?.styleConfig);
 

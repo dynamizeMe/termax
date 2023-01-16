@@ -2,7 +2,6 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import { DefaultColors } from '../styles/color-sets.js';
 import { errorQuestion } from './error-question.js';
-import { Question } from './question.js';
 import logSymbols from 'log-symbols';
 import { Executor } from '../executor/executor.js';
 
@@ -11,14 +10,14 @@ export class ErrorHandler {
   #exitColor = chalk.hex(DefaultColors.RED);
   #errorMarkColor = chalk.hex(DefaultColors.YELLOW);
   #error: any;
-  executor!:Executor;
+  #executor!:Executor;
 
   constructor(executor: Executor) {
-    this.executor = executor;
+    this.#executor = executor;
   }
 
   handleError(fun?: Function, config?: any) {
-    return this.errorPrompt(errorQuestion, fun, config);
+    return this.errorPrompt(fun, config);
   }
 
   get error() {
@@ -29,13 +28,13 @@ export class ErrorHandler {
     this.#error = err;
   }
 
-  errorPrompt(question: Question[], fun?: Function, config?: any): any {
-    inquirer.prompt(question).then((answer) => {
+  errorPrompt(fun?: Function, config?: any): any {
+    inquirer.prompt(errorQuestion).then((answer) => {
       if (answer.choice === 'See Error') {
         this.printErrorData(fun, config);
       } else if (answer.choice === 'Continue' && fun && config && config.length > 0) {
         console.log(this.#errorMarkColor(logSymbols.warning), this.#errorColor('Continued execution with the failed call.'));
-        this.executor.execute(fun, config);
+        this.#executor.execute(fun, config);
       } else {
         console.log(this.#errorMarkColor(logSymbols.error), this.#exitColor('Exited with incomplete execution.'));
         return 1;
@@ -45,6 +44,6 @@ export class ErrorHandler {
 
   printErrorData(fun?: Function, config?: any) {
     console.log(this.#errorMarkColor(logSymbols.warning), this.#errorColor(this.error ? `${this.error}` : `Couldn't retrieve data for this error.`));
-    this.errorPrompt(errorQuestion, fun, config);
+    this.errorPrompt(fun, config);
   }
 }
