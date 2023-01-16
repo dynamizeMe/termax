@@ -486,6 +486,8 @@ In tExecFile it takes a name of a file to be executes in tSpawn it takes argumen
 
 Type: `boolean`
 
+Default: `'false'`
+
 If set to true, it implements error handling (default false).
 
 ##### spinner
@@ -507,6 +509,10 @@ Sets the type of spinner.
 ##### spinner.style
 
 Type: `string`
+
+Default: `'default'`
+
+Values: `'default' | 'custom' | 'none' | 'pale' | 'vivid' | 'system' | 'modesty' | 'sunrise' | 'cold'`
 
 Sets one of the prebuilt styles
 
