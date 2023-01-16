@@ -396,7 +396,9 @@ tExec(calls, () => {
 ```
 #### Output from the code above:
 ![](./gifs/termaxExample7.gif)
-But we can change this by adding a handleErrors: true to our config:
+
+
+-But we can change this by adding a handleErrors: true to our config:
 
 ```javascript
 import { tExec } from '@dynamize/termax';
