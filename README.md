@@ -398,7 +398,7 @@ tExec(calls, () => {
 ![](./gifs/termaxExample7.gif)
 
 
--But we can change this by adding a handleErrors: true to our config:
+But we can change this by adding a handleErrors: true to our config:
 
 ```javascript
 import { tExec } from '@dynamize/termax';
@@ -429,7 +429,9 @@ tExec(calls, () => {
 #### Output from the code above:
 ![](./gifs/termaxExample8.gif)
 ![](./gifs/termaxExample9.gif)
-This will stopt the execution sequence and propt the user to choose between: Continue, See Error or Abort, giving users more control.
+
+
+This will stop the execution sequence and propt the user to choose between: Continue, See Error or Abort, giving users more control.
 
 ## Configuration
 
