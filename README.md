@@ -37,8 +37,6 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 
 <a name="installation"></a>
 
-Termax requires [Node.js](https://nodejs.org/) v10+ to run.
-
 ```sh
 npm install --save @dynamize/termax
 ```
