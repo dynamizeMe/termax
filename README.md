@@ -473,21 +473,25 @@ tExec(call);
 ##### cmd
 
 Type: `string`
+
 In tExec, tExecFile and tSpawn it takes the command to be executed, and in tFork it takes a filename to be executed.
 
 ##### args
 
 Type: `string[]`
+
 In tExecFile it takes a name of a file to be executes in tSpawn it takes arguments passed to the command.
 
 ##### handleErrors
 
 Type: `boolean`
+
 If set to true, it implements error handling (default false).
 
 ##### spinner
 
 Type: `object`
+
 Takes configuration settings for the spinner.
 
 ##### spinner.spinner
@@ -503,21 +507,25 @@ Sets the type of spinner.
 ##### spinner.style
 
 Type: `string`
+
 Sets one of the prebuilt styles
 
 ##### spinner.spawnText
 
 Type: `object`
+
 Sets prefix and text at spawn time.
 
 ##### spinner.succeedText
 
 Type: `object`
+
 Sets prefix and text to be shown once the child process ends.
 
 ##### spinner.errorText
 
 Type: `object`
+
 Sets prefix and text to be shown in case of an error.
 
 ##### spinner.color
