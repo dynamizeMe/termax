@@ -446,8 +446,8 @@ const call = [
     args: [],
     handleErrors: true,
     spinner: {
-      spinner: 'arrows',
-      style: 'vivid',
+      spinner: 'arrow3',
+      style: 'system',
       spawnText: {
         prefix: 'Sleep Starts',
         text: 'Sleeping for 3 sec'
@@ -460,7 +460,7 @@ const call = [
         prefix: 'Something disturbed me',
         text: "I guess I'm aweak now"
       },
-      color: 'green',
+      color: 'red',
       indent: 4
     }
   }
