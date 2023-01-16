@@ -550,7 +550,10 @@ const call = [
 tExec(call);
 ```
 
-Available themes are: default, none, pale, vivid, system, modesty, sunrise, cold and custom, custom being the odd one out.
+Available themes are: 
+#### default, none, pale, vivid, system, modesty, sunrise, cold , custom 
+
+Custom being the odd one out.
 
 #### Custom Styling
 
