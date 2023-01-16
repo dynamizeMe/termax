@@ -61,7 +61,9 @@ npm install --save @dynamize/termax
 ```javascript
 import {tExec, tExecFile, tFork, tSpawn} from '@dynamize/termax';
 ```
-
+#### Teramx only supports ECMAScript imports, and has no support for CommonJS.
+#### Which means you need to setup your project with the type of a module in package.json:
+![](./gifs/package.json.png)
 ### tExec
 
 <a name="tExec"></a>
