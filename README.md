@@ -493,8 +493,11 @@ Takes configuration settings for the spinner.
 ##### spinner.spinner
 
 Type: `string`
-Default: `'dots'`\
+
+Default: `'dots'`
+
 Values: [provided spinners](https://github.com/sindresorhus/cli-spinners/blob/main/spinners.json)
+
 Sets the type of spinner.
 
 ##### spinner.style
@@ -520,14 +523,19 @@ Sets prefix and text to be shown in case of an error.
 ##### spinner.color
 
 Type: `string`
-Default: `'green'`\
+
+Default: `'green'`
+
 Values: `'black' | 'red' | 'green' | 'yellow' | 'blue' | 'magenta' | 'cyan' | 'white' | 'gray'`
+
 Sets the color of the spinner.
 
 ##### spinner.indent
 
 Type: `number`
-Default: `'0'`\
+
+Default: `'0'`
+
 Sets the indent of the spinner.
 
 ## Styling
