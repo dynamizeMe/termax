@@ -738,7 +738,7 @@ tExec(calls);
 ![](./gifs/termaxExample11.gif)
 
 
-Keep in mind that the style config takes hash colors only.
+Keep in mind that the style config takes hash color codes only.
 
 ## Related
 
