@@ -742,6 +742,19 @@ tExec(calls);
 
 Keep in mind that the style config takes hash colors only.
 
+## Related
+
+- [cli-spinners](https://github.com/sindresorhus/cli-spinners) - Spinners for use in the terminal
+- [listr](https://github.com/SamVerschueren/listr) - Terminal task list
+- [CLISpinner](https://github.com/kiliankoe/CLISpinner) - Terminal spinner library for Swift
+- [spinners](https://github.com/FGRibreau/spinners) - Terminal spinners for Rust
+- [marquee-ora](https://github.com/joeycozza/marquee-ora) - Scrolling marquee spinner for Ora
+- [briandowns/spinner](https://github.com/briandowns/spinner) - Terminal spinner/progress indicator for Go
+- [tj/go-spin](https://github.com/tj/go-spin) - Terminal spinner package for Go
+- [observablehq.com/@victordidenko/ora](https://observablehq.com/@victordidenko/ora) - Ora port to Observable notebooks
+- [spinnies](https://github.com/jcarpanelli/spinnies) - Terminal multi-spinner library for Node.js
+- [kia](https://github.com/HarryPeach/kia) - Simple terminal spinners for Deno
+
 ## License
 
 MIT
