@@ -577,7 +577,35 @@ tExec(call);
 ```
 
 Available themes are: 
-#### default, none, pale, vivid, system, modesty, sunrise, cold , custom 
+#### default 
+![](./gifs/default.gif)
+
+#### none
+![](./gifs/none.gif)
+
+
+#### pale 
+![](./gifs/pale.gif)
+
+
+#### vivid
+![](./gifs/vivid.gif)
+
+
+#### system
+![](./gifs/system.gif)
+
+#### modesty
+![](./gifs/modesty.gif)
+ 
+#### sunrise
+![](./gifs/sunrise.gif)
+
+
+#### cold
+![](./gifs/cold.gif)
+ 
+#### custom 
 
 Custom is the odd one out.
 
@@ -589,26 +617,33 @@ If, on the other hand, you would like to have full control of the styling, you c
 ```javascript
 import {tExec} from '@dynamize/termax';
 
-const call = [
-  {
-    cmd: 'sleep 3',
-    spinner: {
-      style: 'custom',
-      styleConfig: {
-        errorColor: '#cceb34',
-        warrningColor: '#eb3483',
-        spawnColor: '#4287f5',
-        succeedColor: '#34eb67',
-        pausedcolor: '#4287f5',
-        messageColor: '#4287f5',
-        textColor: '#7134eb'
-      }
+const call = 
+{
+  cmd: 'sleep 3',
+  spinner: {
+    style: 'custom',
+    styleConfig: {
+      errorColor: '#cceb34',
+      warrningColor: '#eb3483',
+      spawnColor: '#4287f5',
+      succeedColor: '#34eb67',
+      pausedcolor: '#4287f5',
+      messageColor: '#4287f5',
+      textColor: '#7134eb'
     }
   }
-];
+}
 
-tExec(call);
+const calls = [];
+for(let i = 0; i < 3; i++) {
+  calls.push(call);
+}
+
+tExec(calls);
 ```
+#### Output from the code above:
+![](./gifs/termaxExample11.gif)
+
 
 Keep in mind that the style config takes hash colors only.
 
