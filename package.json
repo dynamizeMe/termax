@@ -29,9 +29,16 @@
     "cli",
     "shell",
     "commands",
+    "command-line",
+    "console",
     "child",
+    "indicator",
     "process",
+    "progress",
+    "loading",
     "spinner",
+    "spinners",
+    "styles",
     "terminal"
   ],
   "author": {
