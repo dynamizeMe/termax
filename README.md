@@ -14,7 +14,7 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 ## Table of Contents
 
 1.  [About Termax](#about_termax)
-    1.  [What does teramx do](#what_termax)
+    1.  [What does teramx do?](#what_termax)
     2.  [Spinner limits](#spinner_limits)
     3.  [About termax wrappers](#tremax_wrappers)
 2.  [Documentation](#documentation)
@@ -34,7 +34,7 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 4.  [Support](#support)
 
 ## [About Termax](#about_termax)
-### What does teramx do
+### What does teramx do?
 
 <a name="what_termax"></a>
 If you ended up here, you might be wondering what is termax, and why would I ever use it?
