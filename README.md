@@ -35,7 +35,6 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 
 ## [About Termax](#about_termax)
 ### What does termax do?
-
 <a name="what_termax"></a>
 If you ended up here, you might be wondering what is termax, and why would I ever use it?
 Well, simply put termax allows you to use async child processes in a sequential way.
@@ -46,7 +45,6 @@ But if user experience is something you are looking to maximize then you're in a
 Additionally to that termax comes with built-in error handling, themes, styling and more to speed up your development time, so that you might focus on the meat and potatoes of your project.
 
 ### Spinner limits
-
 <a name="spinner_limits"></a>
 To put it as simple as possible, spinners need continues execution so they can be animated, they will continuously update what's printed on the terminal (till we stop them).
 Now JavaScript is single-threaded, so if we call exec or fork etc.. As they are non-blocking they spawn a shell then execute the command within that shell, but leave the rest of the code to be executed (this includes the spinners), execSync, forkSync etc... are blocking, which means that those method will not return until the child process has fully closed (effectively stopping the spinner execution till then).
@@ -55,6 +53,15 @@ That's why synchronous operations lead to spinner freezing, glitching etc..
 
 Now if we execute asynchronous operations(such as exec, execFile, fork and spawn) in a sequential way, we can still preserve the order of operations,
 but keep the spinner going continuously for each operation. Which is essentially what termax does.(More on that in [about termax wrappers section](#tremax_wrappers)).
+
+### About termax wrappers
+<a name="tremax_wrappers"></a>
+Asynchronous operations are awesome, the allow you to minimaze the execution time fo your code significantly, by both allowing multiple operation to run at the same time as well as allowing the execution flow to continue!
+But they are situations when this is not an ideal approach(All tools have, there prupose), as explaind in [spinner limits section](#spinner_limits).
+All four teramx wrappers (tExec, tExecFile, tFork, tSpawn) work pretty much the same way, picture below will give a visual explanation:
+
+![](./gifs/wrappers.png)
+
 ## [Documentation](#documentation)
 
 <a name="documentation"></a>
