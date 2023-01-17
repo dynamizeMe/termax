@@ -13,7 +13,11 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 
 ## Table of Contents
 
-1.  [Documentation](#documentation)
+1.  [About Termax](#about_termax)
+    1.  [What does teramx do](#what_termax)
+    2.  [Spinner limits](#spinner_limits)
+    3.  [About termax wrappers](#tremax_wrappers)
+2.  [Documentation](#documentation)
     1.  [Installation](#installation)
     2.  [Dependencies](#dependencies)
     3.  [Importing](#importing)
@@ -24,10 +28,10 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
     8.  [Chain](#chain)
     9.  [Error Handling](#error_handling);
     10. [Configuration](#configuration)
-2.  [Styling](#styling)
+3.  [Styling](#styling)
     1.  [Themes](#themes)
     2.  [Custom Styling](#custom_styling)
-3.  [Support](#support)
+4.  [Support](#support)
 
 ## [Documentation](#documentation)
 
