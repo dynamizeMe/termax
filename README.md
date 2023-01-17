@@ -426,7 +426,11 @@ tExec(calls, () => {
 });
 ```
 #### Output from the code above:
+
+#### Continue
 ![](./gifs/termaxExample8.gif)
+
+#### Abort
 ![](./gifs/termaxExample9.gif)
 
 
