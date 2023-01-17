@@ -1,7 +1,7 @@
 {
   "name": "@dynamize/termax",
-  "version": "1.0.2",
-  "description": "A tool to create cli forms, execute shell cammands and call processes accompanied spinners.",
+  "version": "1.0.3",
+  "description": "A tool to create cli forms, execute shell cammands and call processes accompanied with spinners.",
   "type": "module",
   "types": "./lib/types/termax.d.ts",
   "main": "./lib/esm/termax.js",
@@ -29,9 +29,16 @@
     "cli",
     "shell",
     "commands",
+    "command-line",
+    "console",
     "child",
+    "indicator",
     "process",
+    "progress",
+    "loading",
     "spinner",
+    "spinners",
+    "styles",
     "terminal"
   ],
   "author": {

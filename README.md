@@ -26,7 +26,7 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
     6.  [tFork](#tFork)
     7.  [tSpawn](#tSpawn)
     8.  [Chain](#chain)
-    9.  [Error Handling](#error_handling);
+    9.  [Error Handling](#error_handling)
     10. [Configuration](#configuration)
 3.  [Styling](#styling)
     1.  [Themes](#themes)
@@ -81,7 +81,7 @@ tSpawn(calls).executeState.on('done', () => {
 ```
 ### Wrapper limits and best practise 
 As termax wrappers are in fact asynchronous it would be most beneficial to continue the execution flow ether on executeState 'done' or in a callback.
-Calling any block of code after the wrapper will result in that code being executed parallel the wrapper finishes its own execution. 
+Calling any block of code after the wrapper will result in that code being executed parallel the wrapper finishing its own execution. 
 Example case:
 ```javascript
 tExec(calls).executeState.on('done', () => {
@@ -327,7 +327,7 @@ tSpawn(calls, () => {
 | addToChain   | Method which adds an execution sequence to chain takes three arguments: child process name (type string), configs(config array) and an optional callback function |
 | isExecuting  | A getter which returns a boolean                                                                                                                                  |
 | executeChain | Method which executes a chain.                                                                                                                                    |
-| callback     | A setter whict sets a callback to be executed at the end of the chain                                                                                             |
+| callback     | A setter which sets a callback to be executed at the end of the chain                                                                                             |
 
 
 ### Chain Use Case
