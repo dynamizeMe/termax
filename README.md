@@ -6,10 +6,10 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 
 ## Features
 
-- Built in spinner
+- Built in spinner - Credits to [sindresorhus](https://github.com/sindresorhus)
 - Built in error handling
-- Themes and custom styling
-- OS Fallbacks
+- Themes and custom styling - Credits to [chalk](https://github.com/chalk)
+- OS Fallbacks - Credits to [sindresorhus](https://github.com/sindresorhus)
 
 ## Table of Contents
 
