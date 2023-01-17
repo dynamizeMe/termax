@@ -26,7 +26,7 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
     6.  [tFork](#tFork)
     7.  [tSpawn](#tSpawn)
     8.  [Chain](#chain)
-    9.  [Error Handling](#error_handling);
+    9.  [Error Handling](#error_handling)
     10. [Configuration](#configuration)
 3.  [Styling](#styling)
     1.  [Themes](#themes)
