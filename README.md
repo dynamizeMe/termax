@@ -62,6 +62,25 @@ All four teramx wrappers (tExec, tExecFile, tFork, tSpawn) work pretty much the 
 
 ![](./gifs/wrappers.png)
 
+All four wrappers take two arguments, a mondentary configs argument which is an array of config objects (More on configs in [configuration section](#configuration)), and an optional callback argument. Additionally to callbacks, all wrappers have a executeState emitter wich emitts 'start' and 'done'. Example:
+```javascript
+tExec(calls).executeState.on('done', () => {
+  console.log('done');
+});
+
+tExecFile(calls).executeState.on('done', () => {
+  console.log('done');
+});
+
+tFork(calls).executeState.on('done', () => {
+  console.log('done');
+});
+
+tSpawn(calls).executeState.on('done', () => {
+  console.log('done');
+});
+```
+
 ## [Documentation](#documentation)
 
 <a name="documentation"></a>
