@@ -80,6 +80,43 @@ tSpawn(calls).executeState.on('done', () => {
   console.log('done');
 });
 ```
+### Wrapper limits and best practise 
+As termax wrappers are in fact asynchronous it would be most beneficial to continue the execution flow ether on executeState 'done' or in a callback.
+Calling any block of code after the wrapper will result in that code being executed parallel the wrapper finishes its own execution. 
+Example case:
+```javascript
+tExec(calls).executeState.on('done', () => {
+  console.log('done');
+});
+
+function demo() {
+  for(let i = 0; i < 3; i++) {
+    console.log('Code after');
+  }
+}
+
+demo();
+```
+#### Output from the code above:
+![](./gifs/flowExample.gif)
+
+Executing to wrappers back to back will also lead to overlap, because they are both asynchronous, the picture below will give more context.
+![](./gifs/wrappersOverlap.png)
+Let's see it in example:
+Example case:
+```javascript
+tExec(calls).executeState.on('done', () => {
+  console.log('done');
+});
+
+tExec(calls2).executeState.on('done', () => {
+  console.log('Ping done');
+});
+```
+#### Output from the code above:
+![](./gifs/flowExample2.gif)
+
+In case you would like to call multiple wrappers you best use a chain(more on chain in [chain section](#chain)). This will allow you to bypass this issue, plus chain will also provide you with callback functionality so you might be able to continue your execution flow properly.
 
 ## [Documentation](#documentation)
 
