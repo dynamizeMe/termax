@@ -104,7 +104,6 @@ Executing to wrappers back to back will also lead to overlap, because they are b
 ![](./gifs/wrappersOverlap.png)
 
 Let's see it in example:
-Example case:
 ```javascript
 tExec(calls).executeState.on('done', () => {
   console.log('Sleep done');
