@@ -1,4 +1,4 @@
-# Termax
+![](./gifs/termaxLogo.png)
 
 #### _Build Node CLI's in minutes_
 
@@ -6,10 +6,10 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 
 ## Features
 
+- OS Fallbacks - Credits to [sindresorhus](https://github.com/sindresorhus)
 - Built in spinner - Credits to [sindresorhus](https://github.com/sindresorhus)
 - Built in error handling
 - Themes and custom styling - Credits to [chalk](https://github.com/chalk)
-- OS Fallbacks - Credits to [sindresorhus](https://github.com/sindresorhus)
 
 ## Table of Contents
 
@@ -31,7 +31,6 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 3.  [Styling](#styling)
     1.  [Themes](#themes)
     2.  [Custom Styling](#custom_styling)
-4.  [Support](#support)
 
 ## [About Termax](#about_termax)
 ### What does termax do?
