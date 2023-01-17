@@ -102,15 +102,13 @@ demo();
 
 Executing to wrappers back to back will also lead to overlap, because they are both asynchronous, the picture below will give more context.
 
-
 ![](./gifs/wrappersOverlap.png)
-
 
 Let's see it in example:
 Example case:
 ```javascript
 tExec(calls).executeState.on('done', () => {
-  console.log('done');
+  console.log('Sleep done');
 });
 
 tExec(calls2).executeState.on('done', () => {
