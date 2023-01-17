@@ -33,12 +33,15 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
     2.  [Custom Styling](#custom_styling)
 
 ## [About Termax](#about_termax)
+
 ### What does termax do?
+
 <a name="what_termax"></a>
 If you ended up here, you might be wondering what is termax, and why would I ever use it? Well, simply put, termax allows you to use async child processes sequentially. Now you might be wondering why would I ever do that, I can just call synchronous contra parts to those child processes and solve the problem? You would be completely right! You can do that, and quite frankly it would be easier to do so. You can exchange exac for exacSync, spawn for spawnSync etc... If the user experience is of no concern to you, that would be a more preferable approach. But if user experience is something you are looking to maximize, then you're in a pickle. Spinners and such terminal animations won't work properly (maybe not even work) with a synchronous process.(More on that in [spinner limits section](#spinner_limits))
 Additionally to that termax comes with built-in error handling, themes, styling and more to speed up your development time, so that you might focus on the meat and potatoes of your project.
 
 ### Spinner limits
+
 <a name="spinner_limits"></a>
 To put it as simple as possible, spinners need continues execution so they can be animated, they will continuously update what's printed on the terminal (till we stop them). Now JavaScript is single-threaded, so if we call exec or fork etc… As they are non-blocking they spawn a shell then execute the command within that shell, but leave the rest of the code to be executed (this includes the spinners), execSync, forkSync etc... are blocking, which means that this method will not return until the child process has fully closed (effectively stopping the spinner execution till then).
 
@@ -47,14 +50,15 @@ That's why synchronous operations lead to spinner freezing, glitching etc…
 Now if we execute asynchronous operations(such as exec, execFile, fork and spawn) sequentially, we can still preserve the order of operations, but keep the spinner going continuously for each operation. Which is essentially what termax does..(More on that in [about termax wrappers section](#tremax_wrappers)).
 
 ### About termax wrappers
+
 <a name="tremax_wrappers"></a>
 Asynchronous operations are awesome, they allow you to minimize the execution time of your code significantly, by both allowing multiple operation to run at the same time and allowing the execution flow to continue! But they are situations when this is not an ideal approach(All tools have, their purpose), as explained in [spinner limits section](#spinner_limits).
 All four teramx wrappers (tExec, tExecFile, tFork, tSpawn) work pretty much the same way, the picture below will give a visual explanation:
 
-
 ![](./gifs/wrappers.png)
 
 All four wrappers take two arguments, a mandatory configs argument which is an array of config objects (More on configs in [the configuration section](#configuration)), and an optional callback argument. Additionally, to callbacks, all wrappers have a executeState emitter which emits 'start' and 'done'. Example:
+
 ```javascript
 tExec(calls).executeState.on('done', () => {
   console.log('done');
@@ -72,24 +76,29 @@ tSpawn(calls).executeState.on('done', () => {
   console.log('done');
 });
 ```
-### Wrapper limits and best practise 
+
+### Wrapper limits and best practise
+
 As termax wrappers are in fact asynchronous, it would be most beneficial to continue the execution flow ether on executeState 'done' or in a callback.
-Calling any block of code after the wrapper will result in that code being executed parallel, the wrapper finishing its own execution. 
+Calling any block of code after the wrapper will result in that code being executed parallel, the wrapper finishing its own execution.
 Example case:
+
 ```javascript
 tExec(calls).executeState.on('done', () => {
   console.log('done');
 });
 
 function demo() {
-  for(let i = 0; i < 3; i++) {
+  for (let i = 0; i < 3; i++) {
     console.log('Code after');
   }
 }
 
 demo();
 ```
+
 #### Output from the code above:
+
 ![](./gifs/flowExample.gif)
 
 Executing the wrappers back to back will also lead to overlap, because they are both asynchronous, the picture below will give more context.
@@ -97,6 +106,7 @@ Executing the wrappers back to back will also lead to overlap, because they are 
 ![](./gifs/wrappersOverlap.png)
 
 Let's see it in example:
+
 ```javascript
 tExec(calls).executeState.on('done', () => {
   console.log('Sleep done');
@@ -106,10 +116,13 @@ tExec(calls2).executeState.on('done', () => {
   console.log('Ping done');
 });
 ```
+
 #### Output from the code above:
+
 ![](./gifs/flowExample2.gif)
 
 In case you would like to call multiple wrappers, you best use a chain(more on chain in [chain section](#chain)). This will allow you to bypass this issue, plus chain will also provide you with callback functionality, so you might be able to continue your execution flow properly.
+
 ## [Documentation](#documentation)
 
 <a name="documentation"></a>
@@ -140,9 +153,13 @@ npm install --save @dynamize/termax
 ```javascript
 import {tExec, tExecFile, tFork, tSpawn} from '@dynamize/termax';
 ```
+
 #### Teramx only supports ECMAScript imports, and has no support for CommonJS.
+
 #### Which means you need to setup your project with the type of a module in package.json:
+
 ![](./gifs/package.json.png)
+
 ### tExec
 
 <a name="tExec"></a>
@@ -186,8 +203,11 @@ tExec(calls, () => {
   console.log('All done!');
 });
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample1.gif)
+
 ### tExecFile
 
 <a name="tExecFile"></a>
@@ -230,8 +250,11 @@ import {exec} from 'child_process';
 
 exec('ping 8.8.8.8 -c 4');
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample2.gif)
+
 ### tFork
 
 <a name="tFork"></a>
@@ -271,8 +294,11 @@ import {exec} from 'child_process';
 
 exec('ping 8.8.8.8 -c 4');
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample3.gif)
+
 ### tSpawn
 
 <a name="tSpawn"></a>
@@ -306,8 +332,11 @@ tSpawn(calls, () => {
   console.log('All Done');
 });
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample1.gif)
+
 ### Chain
 
 <a name="chain"></a>
@@ -320,7 +349,6 @@ tSpawn(calls, () => {
 | isExecuting  | A getter which returns a boolean                                                                                                                                  |
 | executeChain | Method which executes a chain.                                                                                                                                    |
 | callback     | A setter which sets a callback to be executed at the end of the chain                                                                                             |
-
 
 ### Chain Use Case
 
@@ -373,8 +401,11 @@ chain.addToChain('spawn', calls1);
 chain.addToChain('fork', calls2);
 chain.executeChain();
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample4.gif)
+
 #### Setting callbacks on a chain
 
 There are multiple ways to set a callback on a chain.
@@ -404,29 +435,34 @@ chain.addToChain('fork', calls2, () => {
 });
 chain.executeChain();
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample5.gif)
 
 What we need to keep in mind is that only one callback can be set on a chain. That will be the last callback given:
 
 ```javascript
-import { Chain } from '@dynamize/termax';
+import {Chain} from '@dynamize/termax';
 // calls1 and calls2 declared here...
 const chain = new Chain();
 chain.addToChain('spawn', calls1, () => {
-  console.log('Done #1')
-})
+  console.log('Done #1');
+});
 chain.addToChain('fork', calls2, () => {
-  console.log('Done #2')
+  console.log('Done #2');
 });
 chain.callback = () => {
   console.log('Done #3');
-}
+};
 chain.executeChain();
 // At the end we only get Done #3 printed out
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample6.gif)
+
 #### Chain saftey integration
 
 Once executeChain is called a chain, it can't be called again. You need to set up your chain ahead of executing it, any later alterations to it will be ignored:
@@ -474,46 +510,49 @@ tExec(calls, () => {
   console.log('All done!');
 });
 ```
-#### Output from the code above:
-![](./gifs/termaxExample7.gif)
 
+#### Output from the code above:
+
+![](./gifs/termaxExample7.gif)
 
 But we can change this by adding a handleErrors: true to our config:
 
 ```javascript
-import { tExec } from '@dynamize/termax';
+import {tExec} from '@dynamize/termax';
 
 const calls = [
   {
-    cmd: "sleep 3"
+    cmd: 'sleep 3'
   },
   {
-    cmd: "slep 3",
+    cmd: 'slep 3',
     handleErrors: true,
     spinner: {
-      style: "cold"
-    },
+      style: 'cold'
+    }
   },
-    {
-    cmd: "sleep 3",
+  {
+    cmd: 'sleep 3',
     spinner: {
-      style: "sunrise",
-    },
-  },
+      style: 'sunrise'
+    }
+  }
 ];
 
 tExec(calls, () => {
-  console.log('All done!')
+  console.log('All done!');
 });
 ```
+
 #### Output from the code above:
 
 #### Continue
+
 ![](./gifs/termaxExample8.gif)
 
 #### Abort
-![](./gifs/termaxExample9.gif)
 
+![](./gifs/termaxExample9.gif)
 
 This will stop the execution sequence and prompt the user to choose between: Continue, See Error or Abort, giving users more control.
 
@@ -553,8 +592,11 @@ const call = [
 
 tExec(call);
 ```
+
 #### Output from the code above:
+
 ![](./gifs/termaxExample10.gif)
+
 ##### cmd
 
 Type: `string`
@@ -661,36 +703,41 @@ const call = [
 tExec(call);
 ```
 
-Available themes are: 
-#### default 
+Available themes are:
+
+#### default
+
 ![](./gifs/default.gif)
 
 #### none
+
 ![](./gifs/none.gif)
 
+#### pale
 
-#### pale 
 ![](./gifs/pale.gif)
 
-
 #### vivid
+
 ![](./gifs/vivid.gif)
 
-
 #### system
+
 ![](./gifs/system.gif)
 
 #### modesty
+
 ![](./gifs/modesty.gif)
- 
+
 #### sunrise
+
 ![](./gifs/sunrise.gif)
 
-
 #### cold
+
 ![](./gifs/cold.gif)
- 
-#### custom 
+
+#### custom
 
 Custom is the odd one out.
 
@@ -702,8 +749,7 @@ If, on the other hand, you would like to have full control of the styling, you c
 ```javascript
 import {tExec} from '@dynamize/termax';
 
-const call = 
-{
+const call = {
   cmd: 'sleep 3',
   spinner: {
     style: 'custom',
@@ -717,18 +763,19 @@ const call =
       textColor: '#7134eb'
     }
   }
-}
+};
 
 const calls = [];
-for(let i = 0; i < 3; i++) {
+for (let i = 0; i < 3; i++) {
   calls.push(call);
 }
 
 tExec(calls);
 ```
-#### Output from the code above:
-![](./gifs/termaxExample11.gif)
 
+#### Output from the code above:
+
+![](./gifs/termaxExample11.gif)
 
 Keep in mind that the style config takes hash color codes only.
 
