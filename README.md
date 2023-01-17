@@ -35,33 +35,26 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 ## [About Termax](#about_termax)
 ### What does termax do?
 <a name="what_termax"></a>
-If you ended up here, you might be wondering what is termax, and why would I ever use it?
-Well, simply put termax allows you to use async child processes in a sequential way.
-Now you might be wondering why would I ever do that, I can just call synchronous contraparts to those child processes and solve the problem?
-You would be completely right! You can do that, and quit franklly it would be easier to do so.
-You can exchange exac for exacSync, spawn for spawnSync etc... If the user experience is of no concern to you, that would be a more preferable approach.
-But if user experience is something you are looking to maximize then you're in a pickle. Spinners and such terminal animations won't work properly (maybe not even work) with a synchronous process.(More on that in [spinner limits section](#spinner_limits))
+If you ended up here, you might be wondering what is termax, and why would I ever use it? Well, simply put, termax allows you to use async child processes sequentially. Now you might be wondering why would I ever do that, I can just call synchronous contra parts to those child processes and solve the problem? You would be completely right! You can do that, and quite frankly it would be easier to do so. You can exchange exac for exacSync, spawn for spawnSync etc... If the user experience is of no concern to you, that would be a more preferable approach. But if user experience is something you are looking to maximize, then you're in a pickle. Spinners and such terminal animations won't work properly (maybe not even work) with a synchronous process.(More on that in [spinner limits section](#spinner_limits))
 Additionally to that termax comes with built-in error handling, themes, styling and more to speed up your development time, so that you might focus on the meat and potatoes of your project.
 
 ### Spinner limits
 <a name="spinner_limits"></a>
-To put it as simple as possible, spinners need continues execution so they can be animated, they will continuously update what's printed on the terminal (till we stop them).
-Now JavaScript is single-threaded, so if we call exec or fork etc.. As they are non-blocking they spawn a shell then execute the command within that shell, but leave the rest of the code to be executed (this includes the spinners), execSync, forkSync etc... are blocking, which means that those method will not return until the child process has fully closed (effectively stopping the spinner execution till then).
+To put it as simple as possible, spinners need continues execution so they can be animated, they will continuously update what's printed on the terminal (till we stop them). Now JavaScript is single-threaded, so if we call exec or fork etc… As they are non-blocking they spawn a shell then execute the command within that shell, but leave the rest of the code to be executed (this includes the spinners), execSync, forkSync etc... are blocking, which means that this method will not return until the child process has fully closed (effectively stopping the spinner execution till then).
 
-That's why synchronous operations lead to spinner freezing, glitching etc..
+That's why synchronous operations lead to spinner freezing, glitching etc…
 
-Now if we execute asynchronous operations(such as exec, execFile, fork and spawn) in a sequential way, we can still preserve the order of operations,
-but keep the spinner going continuously for each operation. Which is essentially what termax does.(More on that in [about termax wrappers section](#tremax_wrappers)).
+Now if we execute asynchronous operations(such as exec, execFile, fork and spawn) sequentially, we can still preserve the order of operations, but keep the spinner going continuously for each operation. Which is essentially what termax does..(More on that in [about termax wrappers section](#tremax_wrappers)).
 
 ### About termax wrappers
 <a name="tremax_wrappers"></a>
-Asynchronous operations are awesome, the allow you to minimaze the execution time fo your code significantly, by both allowing multiple operation to run at the same time as well as allowing the execution flow to continue!
-But they are situations when this is not an ideal approach(All tools have, there prupose), as explaind in [spinner limits section](#spinner_limits).
-All four teramx wrappers (tExec, tExecFile, tFork, tSpawn) work pretty much the same way, picture below will give a visual explanation:
+Asynchronous operations are awesome, they allow you to minimize the execution time of your code significantly, by both allowing multiple operation to run at the same time and allowing the execution flow to continue! But they are situations when this is not an ideal approach(All tools have, their purpose), as explained in [spinner limits section](#spinner_limits).
+All four teramx wrappers (tExec, tExecFile, tFork, tSpawn) work pretty much the same way, the picture below will give a visual explanation:
+
 
 ![](./gifs/wrappers.png)
 
-All four wrappers take two arguments, a mondentary configs argument which is an array of config objects (More on configs in [configuration section](#configuration)), and an optional callback argument. Additionally to callbacks, all wrappers have a executeState emitter wich emitts 'start' and 'done'. Example:
+All four wrappers take two arguments, a mandatory configs argument which is an array of config objects (More on configs in [the configuration section](#configuration)), and an optional callback argument. Additionally, to callbacks, all wrappers have a executeState emitter which emits 'start' and 'done'. Example:
 ```javascript
 tExec(calls).executeState.on('done', () => {
   console.log('done');
@@ -80,8 +73,8 @@ tSpawn(calls).executeState.on('done', () => {
 });
 ```
 ### Wrapper limits and best practise 
-As termax wrappers are in fact asynchronous it would be most beneficial to continue the execution flow ether on executeState 'done' or in a callback.
-Calling any block of code after the wrapper will result in that code being executed parallel the wrapper finishing its own execution. 
+As termax wrappers are in fact asynchronous, it would be most beneficial to continue the execution flow ether on executeState 'done' or in a callback.
+Calling any block of code after the wrapper will result in that code being executed parallel, the wrapper finishing its own execution. 
 Example case:
 ```javascript
 tExec(calls).executeState.on('done', () => {
@@ -99,7 +92,7 @@ demo();
 #### Output from the code above:
 ![](./gifs/flowExample.gif)
 
-Executing to wrappers back to back will also lead to overlap, because they are both asynchronous, the picture below will give more context.
+Executing the wrappers back to back will also lead to overlap, because they are both asynchronous, the picture below will give more context.
 
 ![](./gifs/wrappersOverlap.png)
 
@@ -116,8 +109,7 @@ tExec(calls2).executeState.on('done', () => {
 #### Output from the code above:
 ![](./gifs/flowExample2.gif)
 
-In case you would like to call multiple wrappers you best use a chain(more on chain in [chain section](#chain)). This will allow you to bypass this issue, plus chain will also provide you with callback functionality so you might be able to continue your execution flow properly.
-
+In case you would like to call multiple wrappers, you best use a chain(more on chain in [chain section](#chain)). This will allow you to bypass this issue, plus chain will also provide you with callback functionality, so you might be able to continue your execution flow properly.
 ## [Documentation](#documentation)
 
 <a name="documentation"></a>
@@ -155,7 +147,7 @@ import {tExec, tExecFile, tFork, tSpawn} from '@dynamize/termax';
 
 <a name="tExec"></a>
 
-tExec is a wrapper around exec from child_process with the nuance that it can execute a sequence of exec calls. This is useful when one wants to execute multiple exec call in an order and have a spinner working on each call without pauses.
+tExec is a wrapper around exec from child_process, with the nuance that it can execute a sequence of exec calls. This is useful when one wants to execute multiple exec call in an order and have a spinner working on each call without pauses.
 Let's see a simple usage case:
 
 ```javascript
@@ -200,7 +192,7 @@ tExec(calls, () => {
 
 <a name="tExecFile"></a>
 
-tExecFile is a wrapper around execFile from child_process, it takes two arguments: configs(array of config objects) and the optional callback function. What is always required is the cmd and args properties in configs argument, where cmd is an environment in which to execute the file (node, python etc..), and args will take the file name. Let's see an example:
+tExecFile is a wrapper around execFile from child_process, it takes two arguments: configs(array of config objects) and the optional callback function. What is always required is the cmd and args properties in configs argument, where cmd is an environment in which to execute the file (node, python etc...), and args will take the file name. Let's see an example:
 
 ```javascript
 import {tExecFile} from '@dynamize/termax';
@@ -284,7 +276,7 @@ exec('ping 8.8.8.8 -c 4');
 ### tSpawn
 
 <a name="tSpawn"></a>
-tSpawn is a wrapper around spawn from child_process like all other termax wrappers. It also takes two arguments, configs(array of config objects) and an optional callback function, and it always requires the cmd and args properties.Example:
+tSpawn is a wrapper around spawn from child_process, like all other termax wrappers. It also takes two arguments, configs(array of config objects) and an optional callback function, and it always requires the cmd and args properties. Example:
 
 ```javascript
 import {tSpawn} from '@dynamize/termax';
@@ -332,7 +324,7 @@ tSpawn(calls, () => {
 
 ### Chain Use Case
 
-Chain is a class allowing you to chain together multiple different execution sequences. Let's say you want to execute three commands in a sequence and you choose tSpawn to do so, but then you would like to execute a file(maybe generated by one of the commands), now if you try to call tSpawn and right under it tFork, both these will start to execute almost simultaneously. The reason being that each execution in both tSpawn and tFork are async and as such, they will execute side by side there for both execution sequence of tSpawn and tFork will execute side by side.Chain fixes this by allowing to chain together these execution sequences. Let's see this in an example:
+Chain is a class allowing you to chain together multiple different execution sequences. Let's say you want to execute three commands in a sequence, and you choose tSpawn to do so, but then you would like to execute a file(maybe generated by one of the commands), now if you try to call tSpawn and right under it tFork, both these will start to execute almost simultaneously. The reason being that each execution in both tSpawn and tFork are asynchronous and as such, they will execute side by side there for both execution sequence of tSpawn and tFork will execute side by side. Chain fixes this by allowing to chain together these execution sequences. Let's see this in an example:
 
 ```javascript
 import {Chain} from '@dynamize/termax';
@@ -385,7 +377,7 @@ chain.executeChain();
 ![](./gifs/termaxExample4.gif)
 #### Setting callbacks on a chain
 
-There a multiple ways to set a callback on a chain.
+There are multiple ways to set a callback on a chain.
 We can use a setter:
 
 ```javascript
@@ -415,7 +407,7 @@ chain.executeChain();
 #### Output from the code above:
 ![](./gifs/termaxExample5.gif)
 
-What we need to keep in mind is that only one callback can be set on a chain.That will be the last callback given:
+What we need to keep in mind is that only one callback can be set on a chain. That will be the last callback given:
 
 ```javascript
 import { Chain } from '@dynamize/termax';
@@ -455,7 +447,7 @@ chain.executeChain();
 
 <a name="error_handling"></a>
 
-All termax wrappers come with built-in error handling. By default, it is turned off and you will simply be prompted that there was an error, but the execution sequence will continue:
+All termax wrappers come with built-in error handling. By default, it is turned off, and you will simply be prompted that there was an error, but the execution sequence will continue:
 
 ```javascript
 import {tExec} from '@dynamize/termax';
@@ -528,7 +520,7 @@ This will stop the execution sequence and prompt the user to choose between: Con
 ## Configuration
 
 <a name="configuration"></a>
-Configurations that termax wrappers take can be as simple or as complicated as you desire and can get quite a bit more expensive. Here is how a full config would look:
+Configurations that termax wrappers take can be as simple or as complicated as you desire, and can get quite a bit more expensive. Here is how a full config would look:
 
 ```javascript
 import {tExec} from '@dynamize/termax';
@@ -573,7 +565,7 @@ In tExec, tExecFile and tSpawn it takes the command to be executed, and in tFork
 
 Type: `string[]`
 
-In tExecFile it takes a name of a file to be executes in tSpawn it takes arguments passed to the command.
+In tExecFile it takes a name of a file to be executes, in tSpawn it takes arguments passed to the command.
 
 ##### handleErrors
 
@@ -652,7 +644,7 @@ Sets the indent of the spinner.
 #### Themes
 
 <a name="themes"></a>
-You can use a number of built-in themes to speed up your work simply by adding a style property in spinner section of the execution config:
+You can use a number of built-in themes to speed up your work simply by adding a style property in the spinner section of the execution config:
 
 ```javascript
 import {tExec} from '@dynamize/termax';
