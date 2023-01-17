@@ -42,7 +42,7 @@ Well, simply put termax allows you to use async child processes in a sequential 
 Now you might be wondering why would I ever do that, I can just call synchronous contraparts to those child processes and solve the problem?
 You would be completely right! You can do that, and quit franklly it would be easier to do so.
 You can exchange exac for exacSync, spawn for spawnSync etc... If the user experience is of no concern to you, that would be a more preferable approach.
-But if user experience is something you are looking to maximize then you're in a pickle. Spinners and such terminal animations won't work properly (maybe not even work) with a synchronous process.(More on that in [Spinner limits section](#spinner_limits))
+But if user experience is something you are looking to maximize then you're in a pickle. Spinners and such terminal animations won't work properly (maybe not even work) with a synchronous process.(More on that in [spinner limits section](#spinner_limits))
 Additionally to that termax comes with built-in error handling, themes, styling and more to speed up your development time, so that you might focus on the meat and potatoes of your project.
 
 ### Spinner limits
@@ -54,7 +54,7 @@ Now JavaScript is single-threaded, so if we call exec or fork etc.. As they are 
 That's why synchronous operations lead to spinner freezing, glitching etc..
 
 Now if we execute asynchronous operations(such as exec, execFile, fork and spawn) in a sequential way, we can still preserve the order of operations,
-but keep the spinner going continuously for each operation. Which is essentially what termax does.(More on that in [About termax wrappers section](#tremax_wrappers)).
+but keep the spinner going continuously for each operation. Which is essentially what termax does.(More on that in [about termax wrappers section](#tremax_wrappers)).
 ## [Documentation](#documentation)
 
 <a name="documentation"></a>
