@@ -2,7 +2,7 @@
 
 #### _Build Node CLI's in minutes_
 
-Termax is a wrapper library around exec, execFile, fork and spawn child processes which allows you to call async child processes sequentially.
+Termax is a wrapper library around exec, execFile, fork and spawn child processes which allows you to call them sequentially.
 
 ## Features
 
