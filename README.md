@@ -34,6 +34,9 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
 4.  [Support](#support)
 
 ## [About Termax](#about_termax)
+### What does teramx do
+
+<a name="what_termax"></a>
 If you ended up here, you might be wondering what is termax, and why would I ever use it?
 Well, simply put termax allows you to use async child processes in a sequential way.
 Now you might be wondering why would I ever do that, I can just call synchronous contraparts to those child processes and solve the problem?
