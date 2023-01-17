@@ -33,6 +33,15 @@ Termax is a wrapper library around exec, execFile, fork and spawn child processe
     2.  [Custom Styling](#custom_styling)
 4.  [Support](#support)
 
+## [About Termax](#about_termax)
+If you ended up here, you might be wondering what is termax, and why would I ever use it?
+Well, simply put termax allows you to use async child processes in a sequential way.
+Now you might be wondering why would I ever do that, I can just call synchronous contraparts to those child processes and solve the problem?
+You would be completely right! You can do that, and quit franklly it would be easier to do so.
+You can exchange exac for exacSync, spawn for spawnSync etc... If the user experience is of no concern to you, that would be a more preferable approach.
+But if user experience is something you are looking to maximize then you're in a pickle. Spinners and such terminal animations won't work properly (maybe not even work) with a synchronous process.(More on that in [Spinner limits section](#spinner_limits))
+Additionally to that termax comes with built-in error handling, themes, styling and more to speed up your development time, so that you might focus on the meat and potatoes of your project.
+
 ## [Documentation](#documentation)
 
 <a name="documentation"></a>
