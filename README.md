@@ -49,9 +49,12 @@ Additionally to that termax comes with built-in error handling, themes, styling 
 
 <a name="spinner_limits"></a>
 To put it as simple as possible, spinners need continues execution so they can be animated, they will continuously update what's printed on the terminal (till we stop them).
-Now JavaScript is single-threaded, so if we call exec or fork etc.. As they are non-blocking they spawn a shell then execute the command within that shell, but leave the rest of the code to be executed afterwards (this includes the spinners), execSync, forkSync etc... are blocking, which means that those method will not return until the child process has fully closed (effectively stopping the spinner execution till then).
+Now JavaScript is single-threaded, so if we call exec or fork etc.. As they are non-blocking they spawn a shell then execute the command within that shell, but leave the rest of the code to be executed (this includes the spinners), execSync, forkSync etc... are blocking, which means that those method will not return until the child process has fully closed (effectively stopping the spinner execution till then).
 
 That's why synchronous operations lead to spinner freezing, glitching etc..
+
+Now if we execute asynchronous operations(such as exec, execFile, fork and spawn) in a sequential way, we can still preserve the order of operations,
+but keep the spinner going continuously for each operation. Which is essentially what termax does.(More on that in [About termax wrappers section](#tremax_wrappers)).
 ## [Documentation](#documentation)
 
 <a name="documentation"></a>
