@@ -20,11 +20,11 @@ export class Chain {
     this.#callback = call;
   }
 
-  setChain(functions: (Function | processName)[], configs: ExecuteConfig[][]) {
-    functions?.forEach((fun, index) => this.addToChain(fun, configs[index]));
+  setChain(functions: (Function | processName)[], configs: ExecuteConfig[][]): void {
+    functions?.forEach((fun, index): void => this.addToChain(fun, configs[index]));
   }
 
-  addToChain(fun: Function | processName, configs: ExecuteConfig[], callback?: Function) {
+  addToChain(fun: Function | processName, configs: ExecuteConfig[], callback?: Function): void {
     if (!this.#isExecuting) this.#chain.push({fun, configs});
     if (callback) this.#callback = callback;
   }
@@ -33,7 +33,7 @@ export class Chain {
     if (!this.#isExecuting && this.#chain.length) {
       this.#isExecuting = true;
       this.#executor.execute(this.#chain[0].fun, this.#chain[0].configs);
-      this.#executor.executeState.on('done', () => {
+      this.#executor.executeState.on('done', (): void => {
         this.#isExecuting = false;
         this.#chain.shift();
         this.executeChain();

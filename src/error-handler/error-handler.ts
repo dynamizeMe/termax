@@ -16,11 +16,11 @@ export class ErrorHandler {
     this.#executor = executor;
   }
 
-  handleError(fun?: Function, config?: any) {
-    return this.errorPrompt(fun, config);
+  handleError(fun?: Function, config?: any): void {
+    this.errorPrompt(fun, config);
   }
 
-  get error() {
+  get error(): Error {
     return this.#error;
   }
 
@@ -29,7 +29,7 @@ export class ErrorHandler {
   }
 
   errorPrompt(fun?: Function, config?: any): any {
-    inquirer.prompt(errorQuestion).then((answer) => {
+    inquirer.prompt(errorQuestion).then((answer): void => {
       if (answer.choice === 'See Error') {
         this.printErrorData(fun, config);
       } else if (answer.choice === 'Continue' && fun && config && config.length > 0) {
@@ -37,12 +37,12 @@ export class ErrorHandler {
         this.#executor.execute(fun, config);
       } else {
         console.log(this.#errorMarkColor(logSymbols.error), this.#exitColor('Exited with incomplete execution.'));
-        return 1;
+        return;
       }
     });
   }
 
-  printErrorData(fun?: Function, config?: any) {
+  printErrorData(fun?: Function, config?: any): void {
     console.log(this.#errorMarkColor(logSymbols.warning), this.#errorColor(this.error ? `${this.error}` : `Couldn't retrieve data for this error.`));
     this.errorPrompt(fun, config);
   }

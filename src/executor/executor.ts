@@ -33,11 +33,11 @@ export class Executor {
     );
   }
 
-  #constructAtribute(cmd: string, args?: string[]) {
+  #constructAtribute(cmd: string, args?: string[]): any[] {
     return args ? [cmd, args] : [cmd];
   }
 
-  #checkLength(fun: Function, configs: ExecuteConfig[]) {
+  #checkLength(fun: Function, configs: ExecuteConfig[]): void {
     if (configs.length) this.execute(fun, configs);
     else {
       if (this.#Callback) this.#Callback();
@@ -53,11 +53,11 @@ export class Executor {
     const spinner = constructSpinner(spinnerConfig).start();
     const child = fun(...args) as ChildProcess;
 
-    child.on('error', (err) => {
+    child.on('error', (err): void => {
       errorHandler.error = err;
     });
 
-    child.on('close', (code, signal) => {
+    child.on('close', (code, signal): void => {
       if (code) {
         spinner.fail(`${spinnerConfig.errorText.prefix}: ${spinnerConfig.errorText.text}`);
         configs.shift();
